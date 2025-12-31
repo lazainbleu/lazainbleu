@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://lazainbleu.com/og-image.png",
+        url: "https://lazainbleu.com/",
         width: 1200,
         height: 630,
         alt: "Lazain Bleu — Premium Luxury Fragrance",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: "Lazain Bleu — Luxury Fragrance",
     description:
       "Discover Lazain Bleu — premium modern fragrances crafted with elegance.",
-    images: ["https://lazainbleu.com/og-image.png"],
+    images: ["https://lazainbleu.com/"],
   },
   icons: {
     icon: "/icon.svg",
@@ -103,7 +103,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Preload key assets */}
-        <link rel="preload" href="/og-image.png" as="image" />
+        <link rel="preload" href="/icon.svg" as="image" />
 
         {/* Inject structured data */}
         <script
