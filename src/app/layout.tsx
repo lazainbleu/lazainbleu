@@ -1,66 +1,67 @@
-import "@/styles/globals.css"
-import { Inter } from "next/font/google"
-import { ThemeProvider } from "next-themes"
-import type { Metadata, Viewport } from "next"
+import '@/styles/globals.css'
+import { Inter } from 'next/font/google'
+import { ThemeProvider } from 'next-themes'
+import type { Metadata, Viewport } from 'next'
+import { RootLayoutClient } from '@/components/layout/RootLayoutClient'
 
 // Font setup
 const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-  weight: ["400", "500", "600", "700"],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+  weight: ['400', '500', '600', '700'],
 })
 
 // Global SEO metadata
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lazainbleu.com"),
+  metadataBase: new URL('https://lazainbleu.com'),
   title: {
-    default: "Lazain Bleu",
-    template: "%s | Lazain Bleu",
+    default: 'Lazain Bleu',
+    template: '%s | Lazain Bleu',
   },
   description:
-    "Discover Lazain Bleu — premium modern fragrances crafted with elegance, clarity, and luxury.",
+    'Discover Lazain Bleu — premium modern fragrances crafted with elegance, clarity, and luxury.',
   keywords: [
-    "Lazain Bleu",
-    "Fragrance",
-    "Perfume",
-    "Luxury Perfume",
-    "Eau de Parfum",
-    "Lazain Bleu Store",
-    "Premium Scents",
+    'Lazain Bleu',
+    'Fragrance',
+    'Perfume',
+    'Luxury Perfume',
+    'Eau de Parfum',
+    'Lazain Bleu Store',
+    'Premium Scents',
   ],
-  authors: [{ name: "Lazain Bleu", url: "https://lazainbleu.com" }],
-  creator: "Lazain Bleu",
+  authors: [{ name: 'Lazain Bleu', url: 'https://lazainbleu.com' }],
+  creator: 'Lazain Bleu',
   alternates: {
-    canonical: "https://lazainbleu.com",
+    canonical: 'https://lazainbleu.com',
   },
   openGraph: {
-    title: "Lazain Bleu — Modern Luxury Fragrances",
+    title: 'Lazain Bleu — Modern Luxury Fragrances',
     description:
-      "Shop premium fragrances from Lazain Bleu — crafted for elegance, confidence, and timeless character.",
-    url: "https://lazainbleu.com",
-    siteName: "Lazain Bleu",
-    locale: "en_US",
-    type: "website",
+      'Shop premium fragrances from Lazain Bleu — crafted for elegance, confidence, and timeless character.',
+    url: 'https://lazainbleu.com',
+    siteName: 'Lazain Bleu',
+    locale: 'en_US',
+    type: 'website',
     images: [
       {
-        url: "https://lazainbleu.com/",
+        url: 'https://lazainbleu.com/',
         width: 1200,
         height: 630,
-        alt: "Lazain Bleu — Premium Luxury Fragrance",
+        alt: 'Lazain Bleu — Premium Luxury Fragrance',
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Lazain Bleu — Luxury Fragrance",
+    card: 'summary_large_image',
+    title: 'Lazain Bleu — Luxury Fragrance',
     description:
-      "Discover Lazain Bleu — premium modern fragrances crafted with elegance.",
-    images: ["https://lazainbleu.com/"],
+      'Discover Lazain Bleu — premium modern fragrances crafted with elegance.',
+    images: ['https://lazainbleu.com/'],
   },
   icons: {
-    icon: "/icon.svg",
-    apple: "/apple-touch-icon.png",
+    icon: '/icon.svg',
+    apple: '/apple-touch-icon.png',
   },
   robots: {
     index: true,
@@ -70,32 +71,32 @@ export const metadata: Metadata = {
 
 // Mobile viewport
 export const viewport: Viewport = {
-  themeColor: "#000000",
-  width: "device-width",
+  themeColor: '#000000',
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
-  viewportFit: "cover",
+  viewportFit: 'cover',
 }
 
 // Root layout
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   // JSON-LD structured data
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Store",
-    name: "Lazain Bleu",
-    url: "https://lazainbleu.com",
+    '@context': 'https://schema.org',
+    '@type': 'Store',
+    name: 'Lazain Bleu',
+    url: 'https://lazainbleu.com',
     sameAs: [
-      "https://www.instagram.com/lazainbleu",
-      "https://www.tiktok.com/@lazainbleu",
-      "https://www.pinterest.com/lazainbleu",
+      'https://www.instagram.com/lazainbleu',
+      'https://www.tiktok.com/@lazainbleu',
+      'https://www.pinterest.com/lazainbleu',
     ],
     description:
-      "Lazain Bleu is a modern fragrance house offering premium perfumes with elegant craftsmanship.",
-    logo: "https://lazainbleu.com/icon.svg",
+      'Lazain Bleu is a modern fragrance house offering premium perfumes with elegant craftsmanship.',
+    logo: 'https://lazainbleu.com/icon.svg',
     brand: {
-      "@type": "Brand",
-      name: "Lazain Bleu",
+      '@type': 'Brand',
+      name: 'Lazain Bleu',
     },
   }
 
@@ -113,10 +114,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body
-        className={`${inter.variable} bg-[var(--background)] text-[var(--foreground)] font-sans antialiased`}
+        className={`${inter.variable} bg-[var(--background)] font-sans text-[var(--foreground)] antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <main className="pt-20">{children}</main>
+          <RootLayoutClient>{children}</RootLayoutClient>
         </ThemeProvider>
       </body>
     </html>
