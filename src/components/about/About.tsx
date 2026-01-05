@@ -1,144 +1,213 @@
-'use client';
+'use client'
 
-import React from 'react';
-import Image from 'next/image';
-import { Playfair_Display, Manrope } from 'next/font/google';
-import { motion } from 'framer-motion';
-import { clsx } from 'clsx';
+import React, { useRef } from 'react'
+import Image from 'next/image'
+import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
+import { GeistSans } from 'geist/font/sans'
+import { GeistMono } from 'geist/font/mono'
+import { Balancer } from 'react-wrap-balancer'
+import { cn } from '@/lib/utils'
 
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif' });
-const manrope = Manrope({ subsets: ['latin'], variable: '--font-sans' });
+const BRAND = {
+  founder: {
+    name: 'Zain',
+    role: 'Founder & CEO',
+    image: '/images/owner.png',
+  },
+  tagline: 'Crafted for those who move in silence.',
+  philosophy: 'Luxury is a silent signature of power and elegance.',
+  history:
+    'Lazain Bleu is a luxury fragrance house founded in 2025, blending French artistry with Andalusian and Islamic heritage. Guided by the philosophy “Luxury, Inspired by Faith and Heritage”, each creation is an olfactory journey that honors tradition while embracing contemporary elegance.',
+}
 
-const ASSETS = {
-    hero: "/assets/try.jpg",
-    founder: "/images/owner.png",
-    heritage: "/images/heritage.jpg",
-};
+/**
+ * PAGE 1: THE ATMOSPHERIC VISION
+ */
+const VisionPage = ({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) => {
+  const opacity = useTransform(scrollYProgress, [0, 0.15], [1, 0.85])
 
-export default function AboutBrand() {
-    return (
-        <main className={clsx(
-            playfair.variable, manrope.variable,
-            "bg-[#0D0D0D] text-[#ECECE8] font-sans selection:bg-[#C5A059] selection:text-black overflow-x-hidden"
-        )}>
+  return (
+    <motion.section
+      style={{ opacity }}
+      className="relative flex h-screen w-full flex-col justify-center bg-[#0a0a0a] px-6 md:px-12"
+    >
+      <div className="mx-auto flex h-full max-w-3xl flex-col items-center justify-center space-y-6 text-center md:space-y-8">
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className={cn(
+            'text-[10px] font-medium uppercase tracking-[0.8em] text-zinc-500 md:text-[11px]',
+            GeistMono.className
+          )}
+        >
+          Our Story
+        </motion.p>
 
-            {/* --- 1. NEW AVANT-GARDE HERO --- */}
-            <section className="relative min-h-screen grid grid-cols-1 lg:grid-cols-12 border-b border-white/5">
-                {/* Left Side: Text Dominance */}
-                <div className="lg:col-span-7 flex flex-col justify-between p-6 md:p-12 lg:p-20 order-2 lg:order-1">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
-                        className="flex items-center gap-4"
-                    >
-                        <div className="w-8 h-[1px] bg-[#C5A059]" />
-                        <span className="text-[10px] tracking-[0.8em] uppercase text-[#C5A059]">Maison Lazain Bleu</span>
-                    </motion.div>
+        <h1 className="text-3xl font-extralight leading-tight tracking-tight text-white md:text-5xl lg:text-6xl">
+          <Balancer>{BRAND.tagline}</Balancer>
+        </h1>
 
-                    <div className="my-12 lg:my-0">
-                        <motion.h1
-                            initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                            className="font-serif text-[18vw] lg:text-[13vw] leading-[0.75] tracking-tighter"
-                        >
-                            Soul <br /> <span className="italic opacity-20">Inhaled.</span>
-                        </motion.h1>
-                    </div>
+        <p className="max-w-md text-sm font-light leading-relaxed text-zinc-400 opacity-80 md:text-base">
+          Experience luxury in every detail.
+        </p>
 
-                    <div className="flex flex-col md:flex-row justify-between items-end gap-8">
-                        <p className="text-[11px] leading-relaxed opacity-40 uppercase tracking-[0.2em] max-w-[280px]">
-                            Inspired by the sanctity of faith and the timelessness of Andalusian heritage.
-                        </p>
-                        <span className="font-serif italic text-4xl opacity-10 hidden md:block">Paris — 2025</span>
-                    </div>
-                </div>
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: '40px' }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="mx-auto mt-6 h-[1px] bg-zinc-800"
+        />
+      </div>
 
-                {/* Right Side: Image Monolith */}
-                <div className="lg:col-span-5 relative h-[50vh] lg:h-full order-1 lg:order-2 overflow-hidden">
-                    <motion.div
-                        initial={{ scale: 1.2, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 2.5 }}
-                        className="h-full w-full"
-                    >
-                        <Image src={ASSETS.hero} alt="The Scent" fill className="object-cover grayscale contrast-125 brightness-75" priority />
-                    </motion.div>
-                    {/* Vertical Label */}
-                    <div className="absolute bottom-12 right-0 origin-right rotate-90 translate-x-full pr-12 hidden lg:block">
-                        <span className="text-[9px] tracking-[1em] uppercase opacity-30 whitespace-nowrap">Authentic Craftsmanship</span>
-                    </div>
-                </div>
-            </section>
+      <motion.div
+        animate={{ y: [0, 6, 0] }}
+        transition={{ duration: 1.8, repeat: Infinity }}
+        className="absolute bottom-12 left-1/2 hidden -translate-x-1/2 md:block"
+      >
+        <div className="h-12 w-[1px] bg-gradient-to-b from-zinc-700 to-transparent" />
+      </motion.div>
+    </motion.section>
+  )
+}
 
-            {/* --- 2. THE SACRED STATEMENT --- */}
-            <section className="py-40 px-6 md:px-20 text-center bg-white text-black">
-                <motion.div
-                    whileInView={{ opacity: [0, 1], y: [20, 0] }}
-                    viewport={{ once: true }}
-                    className="max-w-4xl mx-auto space-y-12"
-                >
-                    <span className="text-[10px] tracking-[0.5em] uppercase font-bold text-[#C5A059]">The Covenant</span>
-                    <h2 className="font-serif text-4xl md:text-7xl leading-tight tracking-tighter">
-                        "Beauty is a <span className="italic opacity-30">silent prayer</span>, and scent is its most profound language."
-                    </h2>
-                    <p className="text-xl font-light opacity-60 max-w-2xl mx-auto leading-relaxed">
-                        Maison Lazain Bleu lahir dari pencarian makna. Kami mengolah niat menjadi aroma, memadukan tradisi spiritual dengan presisi modern.
-                    </p>
-                </motion.div>
-            </section>
+/**
+ * FOUNDER CARD
+ */
+const FounderCard = () => (
+  <div className="mt-8 space-y-2 text-center lg:text-left">
+    <h3 className="text-xl font-light uppercase tracking-[0.2em] text-white">
+      {BRAND.founder.name}
+    </h3>
+    <p
+      className={cn(
+        'text-[9px] font-medium uppercase tracking-[0.4em] text-zinc-500',
+        GeistMono.className
+      )}
+    >
+      {BRAND.founder.role}
+    </p>
+  </div>
+)
 
-            {/* --- 3. FOUNDER: THE PORTRAIT (REFINED SIZE) --- */}
-            <section className="py-32 px-6 md:px-20 grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
-                <div className="lg:col-span-5 flex justify-center">
-                    <div className="relative w-full max-w-sm aspect-[3/4] bg-[#1A1A1A] border border-white/5 p-4 grayscale transition-all duration-1000 hover:grayscale-0">
-                        <Image
-                            src={ASSETS.founder}
-                            alt="Zain"
-                            fill
-                            className="object-contain p-6"
-                        />
-                    </div>
-                </div>
-                <div className="lg:col-span-7 space-y-10">
-                    <span className="text-[10px] tracking-[0.5em] uppercase opacity-40">Creative Director</span>
-                    <h3 className="font-serif text-7xl md:text-9xl tracking-tighter">Zain.</h3>
-                    <p className="text-2xl font-light italic opacity-60 max-w-xl border-l border-[#C5A059] pl-8">
-                        "Warisan bukan tentang apa yang kita tinggalkan, tapi tentang apa yang kita bawa ke masa depan dengan kejujuran."
-                    </p>
-                    <div className="pt-8">
-                        <div className="h-[1px] w-20 bg-white/20" />
-                    </div>
-                </div>
-            </section>
+/**
+ * PAGE 2: THE HERITAGE & OWNER
+ */
+const HeritagePage = () => {
+  return (
+    <section className="relative w-full bg-[#0a0a0a] px-6 pb-32 pt-12 lg:px-24">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-2 lg:gap-24">
+          {/* Persona Image Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            <div className="relative aspect-[3/4] w-full overflow-hidden border border-zinc-900 bg-zinc-900/50">
+              <Image
+                src={BRAND.founder.image}
+                alt={BRAND.founder.name}
+                fill
+                /* FIX: opacity-90 sudah masuk ke dalam className */
+                className="object-cover opacity-90 transition-all duration-700 hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
+            </div>
+            <FounderCard />
+          </motion.div>
 
-            {/* --- 4. ATELIER GRID: DARK MODE LUXE --- */}
-            <section className="py-40 px-6 md:px-20 bg-[#080808] border-y border-white/5">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-1px bg-white/5">
-                    {[
-                        { t: "Sacred Sourcing", d: "Memanen bahan dari tanah yang diberkati tradisi." },
-                        { t: "Slow Infusion", d: "Waktu adalah bahan kami yang paling rahasia." },
-                        { t: "Divine Design", d: "Botol yang dirancang untuk keabadian visual." }
-                    ].map((item, i) => (
-                        <div key={i} className="bg-[#0D0D0D] p-12 space-y-8 hover:bg-black transition-all duration-500">
-                            <span className="text-[#C5A059] font-mono text-xs">0{i + 1} —</span>
-                            <h4 className="font-serif text-2xl tracking-wide">{item.t}</h4>
-                            <p className="text-xs opacity-30 leading-relaxed tracking-widest uppercase">{item.d}</p>
-                        </div>
-                    ))}
-                </div>
-            </section>
+          {/* Text Content Section */}
+          <div className="space-y-12 md:space-y-16 lg:pt-12">
+            <motion.div
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-2xl font-extralight italic leading-snug tracking-tight text-white opacity-90 md:text-4xl">
+                <Balancer>"{BRAND.philosophy}"</Balancer>
+              </h2>
+            </motion.div>
 
-            {/* --- 5. THE FINAL CALL --- */}
-            <section className="py-40 bg-white text-black flex flex-col items-center justify-center text-center px-6">
-                <motion.div whileInView={{ opacity: [0, 1] }} className="space-y-12">
-                    <h2 className="font-serif text-5xl md:text-[8vw] leading-none tracking-tighter">Wear the Invisible.</h2>
-                    <button className="group relative px-16 py-6 border border-black overflow-hidden">
-                        <span className="relative z-10 text-[10px] tracking-[0.8em] uppercase font-bold group-hover:text-white transition-colors duration-500">
-                            Enter Collection
-                        </span>
-                        <div className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.19, 1, 0.22, 1]" />
-                    </button>
-                </motion.div>
-            </section>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <p className="border-l border-zinc-800/50 pl-6 text-base font-light leading-[1.8] text-zinc-400 md:pl-8 md:text-[17px]">
+                {BRAND.history}
+              </p>
 
-        </main>
-    );
+              <div>
+                <button className="group flex items-center gap-6 text-white transition-all">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.5em] text-zinc-300 transition-colors group-hover:text-white">
+                    Discover the House
+                  </span>
+                  <div className="relative h-[1px] w-12 overflow-hidden bg-zinc-800">
+                    <div className="absolute inset-0 -translate-x-full bg-white transition-transform duration-500 group-hover:translate-x-0" />
+                  </div>
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Footer Signature: ESTD 2025 */}
+        <div className="mt-32 space-y-4 text-center">
+          <div className="mx-auto mb-8 h-12 w-px bg-gradient-to-b from-zinc-800 to-transparent" />
+          <p
+            className={cn(
+              'text-[11px] font-light uppercase tracking-[1.2em] text-zinc-400 md:text-[12px]',
+              GeistMono.className
+            )}
+          >
+            Lazain Bleu
+          </p>
+          <p
+            className={cn(
+              'text-[9px] font-medium uppercase tracking-[0.6em] text-zinc-600',
+              GeistMono.className
+            )}
+          >
+            ESTD 2025
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default function About() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  })
+
+  return (
+    <main
+      ref={containerRef}
+      className={cn(
+        'relative min-h-screen bg-[#0a0a0a] selection:bg-white selection:text-black',
+        GeistSans.className
+      )}
+    >
+      {/* Background layers */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[url('/static/grain.png')] bg-cover opacity-5" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_#1a1a1a_0%,_transparent_100%)] opacity-20" />
+      </div>
+
+      <div className="relative z-10">
+        <VisionPage scrollYProgress={scrollYProgress} />
+        <HeritagePage />
+      </div>
+    </main>
+  )
 }
