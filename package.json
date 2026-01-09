@@ -1,7 +1,7 @@
 {
-  "name": "lazainbleu-frontend",
+  "name": "lazainbleu",
   "version": "1.0.0",
-  "description": "L'azainbleu E-commerce Frontend",
+  "description": "L'azainbleu E-commerce",
   "author": "Lazain Bleu",
   "private": true,
   "scripts": {
