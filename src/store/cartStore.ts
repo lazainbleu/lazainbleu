@@ -1,56 +1,79 @@
 import { create } from 'zustand'
-
-type CartItem = {
-  id: string
-  name: string
-  price: number
-  qty: number
-  image: string
-}
+import { persist } from 'zustand/middleware'
+import type { CartItem } from '@/types/product'
 
 type CartStore = {
   items: CartItem[]
   addItem: (item: CartItem) => void
   removeItem: (id: string) => void
+  updateQuantity: (id: string, quantity: number) => void
   clearCart: () => void
   totalItems: () => number
   totalPrice: () => number
 }
 
-// DUMMY
-const dummyItems: CartItem[] = [
-  {
-    id: 'p1',
-    name: 'Bleu Noir 50ml',
-    price: 450000,
-    qty: 1,
-    image: '/images/perfume1.jpg',
-  },
-  {
-    id: 'p2',
-    name: 'Eau Fraiche 100ml',
-    price: 650000,
-    qty: 2,
-    image: '/images/perfume2.jpg',
-  },
-]
+export const useCartStore = create<CartStore>()(
+  persist(
+    (set, get) => ({
+      items: [],
 
-export const useCartStore = create<CartStore>((set, get) => ({
-  items: dummyItems, // inject dummy
+      addItem: (item) =>
+        set((state) => {
+          const existingItem = state.items.find((i) => i.id === item.id)
 
-  addItem: (item) =>
-    set((state) => ({
-      items: [...state.items, item],
-    })),
+          if (existingItem) {
+            // Update quantity if item exists
+            const newQuantity = existingItem.quantity + item.quantity
+            // Don't exceed stock
+            const finalQuantity = Math.min(newQuantity, item.stock)
 
-  removeItem: (id) =>
-    set((state) => ({
-      items: state.items.filter((i) => i.id !== id),
-    })),
+            return {
+              items: state.items.map((i) =>
+                i.id === item.id ? { ...i, quantity: finalQuantity } : i
+              ),
+            }
+          }
 
-  clearCart: () => set({ items: [] }),
+          // Add new item
+          return {
+            items: [...state.items, item],
+          }
+        }),
 
-  totalItems: () => get().items.reduce((total, i) => total + i.qty, 0),
+      removeItem: (id) =>
+        set((state) => ({
+          items: state.items.filter((i) => i.id !== id),
+        })),
 
-  totalPrice: () => get().items.reduce((total, i) => total + i.price * i.qty, 0),
-}))
+      updateQuantity: (id, quantity) =>
+        set((state) => {
+          if (quantity <= 0) {
+            // Remove item if quantity is 0 or less
+            return {
+              items: state.items.filter((i) => i.id !== id),
+            }
+          }
+
+          return {
+            items: state.items.map((i) => {
+              if (i.id === id) {
+                // Don't exceed stock
+                const finalQuantity = Math.min(quantity, i.stock)
+                return { ...i, quantity: finalQuantity }
+              }
+              return i
+            }),
+          }
+        }),
+
+      clearCart: () => set({ items: [] }),
+
+      totalItems: () => get().items.reduce((total, i) => total + i.quantity, 0),
+
+      totalPrice: () => get().items.reduce((total, i) => total + i.price * i.quantity, 0),
+    }),
+    {
+      name: 'lazainbleu-cart',
+    }
+  )
+)

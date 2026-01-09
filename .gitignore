@@ -3,10 +3,10 @@
 # ==========================
 node_modules/
 .pnpm-store/
-.pnpm-debug.log*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # Yarn Berry
 .yarn/*
@@ -19,9 +19,22 @@ yarn-error.log*
 # Build / Output
 # ==========================
 .next/
+.next/cache/
 out/
-build/
 dist/
+build/
+.turbo/
+.cache/
+
+# ==========================
+# Prisma
+# ==========================
+# Client is generated in node_modules, so this is fine.
+prisma/*-journal
+prisma/dev.db
+prisma/dev.db-journal
+# Migrations: optional — keep if you want versioning
+# prisma/migrations/
 
 # ==========================
 # Env Files (VERY IMPORTANT)
@@ -32,13 +45,16 @@ dist/
 *.env.local
 
 # ==========================
-# OS / Misc Files
+# OS / Misc
 # ==========================
 .DS_Store
 Thumbs.db
 *.pem
 *.tsbuildinfo
-next-env.d.ts
+
+# DO NOT IGNORE THIS
+# next-env.d.ts should stay in repo
+# next-env.d.ts
 
 # ==========================
 # Testing
