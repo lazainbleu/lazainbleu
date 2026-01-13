@@ -3,14 +3,17 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Search, User, ShoppingCart, Menu, Globe } from 'lucide-react'
+import type { User as SupabaseUser } from '@supabase/supabase-js'
 import { clsx } from 'clsx'
 import { NAVIGATION_ITEMS } from '@/constants/navigation'
 import { useScroll } from '@/hooks/use-scroll'
+import { useSupabaseSession } from '@/hooks/use-supabase-session'
 import { MobileMenu } from './MobileMenu'
 import CartSlider from '@/components/cart/CartSlider'
 
 export default function Header() {
   const isScrolled = useScroll(10)
+  const { user, isLoading } = useSupabaseSession()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -56,7 +59,11 @@ export default function Header() {
           {/* RIGHT */}
           <div className="flex w-1/4 items-center justify-end gap-3 lg:w-1/3">
             <DesktopNav items={NAVIGATION_ITEMS.slice(2)} className="mr-4" />
-            <ActionIcons onOpenCart={() => setIsCartOpen(true)} />
+            <ActionIcons
+              onOpenCart={() => setIsCartOpen(true)}
+              user={user}
+              isLoading={isLoading}
+            />
           </div>
         </div>
       </div>
@@ -131,16 +138,40 @@ function DesktopNav({ items, showGlobe, className }: any) {
   )
 }
 
-function ActionIcons({ onOpenCart }: { onOpenCart: () => void }) {
+function ActionIcons({
+  onOpenCart,
+  user,
+  isLoading,
+}: {
+  onOpenCart: () => void
+  user: SupabaseUser | null
+  isLoading: boolean
+}) {
+  const accountHref = user ? '/profile' : '/login'
+  const accountLabel = user ? 'Profile' : 'Login'
+
   return (
     <div className="flex items-center gap-1.5 md:gap-4">
       <button className="p-1 hover:opacity-50" aria-label="Search">
         <Search className="h-5 w-5 stroke-[1.1px]" />
       </button>
 
-      <button className="hidden p-1 hover:opacity-50 md:block" aria-label="Account">
+      <Link
+        href={accountHref}
+        className="hidden items-center gap-2 p-1 hover:opacity-50 md:flex"
+        aria-label={accountLabel}
+      >
         <User className="h-5 w-5 stroke-[1.1px]" />
-      </button>
+        <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
+          {isLoading ? 'Account' : accountLabel}
+        </span>
+        <span
+          className={clsx(
+            'h-1.5 w-1.5 rounded-full',
+            isLoading ? 'bg-neutral-200' : user ? 'bg-emerald-600' : 'bg-neutral-400'
+          )}
+        />
+      </Link>
 
       <button
         className="relative p-1 hover:opacity-50"
