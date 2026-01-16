@@ -24,7 +24,7 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        'fixed left-0 right-0 top-0 z-50 bg-white',
+        'fixed left-0 right-0 top-0 z-50 bg-[var(--lb-white)]',
         transitionClass,
         isScrolled ? 'shadow-sm' : 'pt-2 md:pt-4'
       )}
@@ -34,7 +34,7 @@ export default function Header() {
           'w-full border-b',
           transitionClass,
           isScrolled
-            ? 'border-neutral-100 bg-white/95 py-2 backdrop-blur-md'
+            ? 'border-neutral-100 bg-[var(--lb-white)] py-2 backdrop-blur-md'
             : 'border-transparent py-3 md:py-5'
         )}
       >
