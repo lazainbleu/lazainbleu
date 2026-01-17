@@ -52,7 +52,7 @@ const itemVariants: Variants = {
 
 export default function ValueProposition() {
   return (
-    <section className="overflow-hidden bg-white py-12 selection:bg-zinc-900 selection:text-white md:py-16">
+    <section className="overflow-hidden bg-[var(--lb-white)] py-12 selection:bg-zinc-900 selection:text-white md:py-16">
       <div className="container mx-auto px-6">
         {/* Header Section */}
         <div className="mb-10 text-center">
