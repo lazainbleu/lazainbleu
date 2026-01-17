@@ -2,16 +2,16 @@ import React from 'react'
 
 const PrivacyPolicy = () => {
   return (
-    /* Menggunakan variabel bg dari root untuk menghindari isu kontras */
-    <section className="min-h-screen bg-[var(--lb-white)] px-6 py-20 text-[var(--lb-black)] md:px-12">
+    /* Background menggunakan --lb-white, Teks menggunakan --lb-bleu */
+    <section className="min-h-screen bg-[var(--lb-white)] px-6 py-20 text-[var(--lb-bleu)] selection:bg-[var(--lb-bleu)] selection:text-[var(--lb-white)] md:px-12">
       <div className="mx-auto max-w-2xl">
         {/* Header Section */}
         <header className="mb-20 text-center">
-          <h1 className="mb-4 font-serif text-3xl tracking-tight text-[var(--lb-black)] md:text-4xl">
+          <h1 className="mb-4 font-serif text-3xl tracking-tight text-[var(--lb-bleu)] md:text-4xl">
             Privacy Policy
           </h1>
-          {/* Garis aksen menggunakan variabel border atau black */}
-          <div className="mx-auto mb-5 h-[1px] w-8 bg-[var(--lb-black)] opacity-20" />
+          {/* Garis aksen menggunakan variabel bleu dengan opacity rendah sesuai tema mewah */}
+          <div className="mx-auto mb-5 h-[1px] w-8 bg-[var(--lb-bleu)] opacity-20" />
           <p className="mb-8 font-sans text-[11px] font-medium uppercase tracking-[0.25em] text-[var(--lb-neutral)] md:text-[12px]">
             Data Protection & Trust
           </p>
@@ -23,11 +23,12 @@ const PrivacyPolicy = () => {
         </header>
 
         {/* Content Section */}
-        <div className="border-lb space-y-16 border-t pt-16">
+        {/* Border menggunakan variabel --lb-border yang sudah didefinisikan di global css */}
+        <div className="space-y-16 border-t border-[var(--lb-border)] pt-16">
           {/* Item 01 */}
           <article className="group">
-            <h2 className="mb-5 flex items-center font-sans text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--lb-black)] md:text-[12px]">
-              <span className="mr-3 opacity-30 transition-opacity group-hover:opacity-100">
+            <h2 className="mb-5 flex items-center font-sans text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--lb-bleu)] md:text-[12px]">
+              <span className="mr-3 text-[var(--lb-bleu)] opacity-30 transition-opacity group-hover:opacity-100">
                 01.
               </span>
               Data Collection
@@ -41,8 +42,8 @@ const PrivacyPolicy = () => {
 
           {/* Item 02 */}
           <article className="group">
-            <h2 className="mb-5 flex items-center font-sans text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--lb-black)] md:text-[12px]">
-              <span className="mr-3 opacity-30 transition-opacity group-hover:opacity-100">
+            <h2 className="mb-5 flex items-center font-sans text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--lb-bleu)] md:text-[12px]">
+              <span className="mr-3 text-[var(--lb-bleu)] opacity-30 transition-opacity group-hover:opacity-100">
                 02.
               </span>
               Purpose of Use
@@ -56,8 +57,8 @@ const PrivacyPolicy = () => {
 
           {/* Item 03 */}
           <article className="group">
-            <h2 className="mb-5 flex items-center font-sans text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--lb-black)] md:text-[12px]">
-              <span className="mr-3 opacity-30 transition-opacity group-hover:opacity-100">
+            <h2 className="mb-5 flex items-center font-sans text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--lb-bleu)] md:text-[12px]">
+              <span className="mr-3 text-[var(--lb-bleu)] opacity-30 transition-opacity group-hover:opacity-100">
                 03.
               </span>
               High-Tier Security
@@ -70,12 +71,12 @@ const PrivacyPolicy = () => {
           </article>
 
           {/* Item 04: Featured Policy Section */}
-          {/* Menggunakan bg-neutral-50 (standar tailwind) atau transparent dengan border */}
-          <article className="border-l border-[var(--lb-black)] bg-neutral-50/50 p-8 md:p-10">
-            <h2 className="mb-5 font-sans text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--lb-black)] md:text-[12px]">
+          {/* Menggunakan border bleu yang sangat tipis dan background yang sedikit berbeda dari bg utama untuk penekanan */}
+          <article className="bg-[var(--lb-bleu)]/[0.02] border-l-2 border-[var(--lb-bleu)] p-8 md:p-10">
+            <h2 className="mb-5 font-sans text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--lb-bleu)] md:text-[12px]">
               04. Exclusive Custody
             </h2>
-            <p className="font-sans text-[14px] font-normal italic leading-[1.8] text-[var(--lb-black)] md:text-[15px]">
+            <p className="font-sans text-[14px] font-normal italic leading-[1.8] text-[var(--lb-bleu)] md:text-[15px]">
               Lazain Bleu strictly prohibits the sale of your personal information to
               third parties. Your data is held in professional exclusivity; it remains
               yours, and ours alone.
@@ -84,7 +85,7 @@ const PrivacyPolicy = () => {
         </div>
 
         {/* Footer Info */}
-        <footer className="border-lb mt-24 border-t pt-8 text-center">
+        <footer className="mt-24 border-t border-[var(--lb-border)] pt-8 text-center">
           <p className="font-sans text-[10px] uppercase tracking-widest text-[var(--lb-neutral)] opacity-60">
             Last Updated: January 2026
           </p>
