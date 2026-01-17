@@ -1,5 +1,17 @@
 import Hero from '@/components/home/Hero'
+import BrandCinematic from '@/components/home/BrandCinematic'
+import DiscoverysGrid from '../../components/home/DiscoveryGrid'
+import ValueProposition from '@/components/home/ValueProposition'
+import FeaturedProducts from '@/components/home/FeaturedProducts'
 
 export default function Home() {
-  return <Hero />
+  return (
+    <>
+      <Hero />
+      <FeaturedProducts />
+      <BrandCinematic videoFileName="cinematic-reveal.mp4" className="mt-0" />
+      <ValueProposition />
+      <DiscoverysGrid />
+    </>
+  )
 }

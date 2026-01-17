@@ -42,7 +42,7 @@ const FOOTER_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#0A192F]/5 bg-white pb-10 pt-20">
+    <footer className="border-t border-[#0A192F]/5 bg-[var(--lb-white)] pb-10 pt-20">
       <div className="mx-auto max-w-[1440px] px-6 md:px-12">
         {/* Upper Footer */}
         <div className="mb-20 grid grid-cols-1 gap-16 lg:grid-cols-12">
@@ -107,7 +107,7 @@ export default function Footer() {
             <h2 className="text-xl font-light uppercase tracking-[0.4em] text-[#0A192F]">
               LAZAIN<span className="font-semibold">BLEU</span>
             </h2>
-            <span className="text-[10px] uppercase tracking-[0.4em] text-[#C5A27D]">
+            <span className="text-[10px] uppercase tracking-[0.4em] text-[var(--lb-bleu)]">
               Luxury, Inspired by Faith and Heritage
             </span>
           </div>

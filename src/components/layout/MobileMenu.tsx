@@ -46,7 +46,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           </button>
         </div>
 
-        {/* Content */}
+        {/* Main Content */}
         <div className="-mt-16 flex grow flex-col items-center justify-center">
           <nav className="mb-12 flex flex-col items-center space-y-8">
             {NAVIGATION_ITEMS.map((item, idx) => (
@@ -65,7 +65,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             ))}
           </nav>
 
-          {/* Action Icons - Wrapped in Buttons */}
+          {/* Action Icons */}
           <div
             className={clsx(
               'relative z-[90] flex justify-center gap-10 transition-all delay-300 duration-1000',
@@ -98,6 +98,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </button>
           </div>
 
+          {/* Login / Logout */}
           <div
             className={clsx(
               'mt-10 flex flex-col items-center gap-3 text-sm uppercase tracking-[0.2em] transition-all duration-700',
