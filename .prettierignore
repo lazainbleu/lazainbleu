@@ -1,0 +1,22 @@
+# Ignore build artifacts
+.next/
+out/
+dist/
+build/
+.turbo/
+.cache/
+
+# Node
+node_modules/
+
+# Env
+.env
+*.env
+*.env.local
+
+# Logs
+*.log
+
+# Ignore auto-generated Next.js TS types
+.next/dev/types/
+.next/dev/types/routes.d.ts
