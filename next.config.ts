@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     // menghentikan Next.js menambah include otomatis ke tsconfig
     tsconfigPath: './tsconfig.json',
   },
+  typedRoutes: false,
 }
 
 export default nextConfig
