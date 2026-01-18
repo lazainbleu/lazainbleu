@@ -61,6 +61,7 @@
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,md}": [
       "prettier --write"
-    ]
+    ],
+    "next-env.d.ts": "echo 'skip next-env.d.ts'"
   }
 }

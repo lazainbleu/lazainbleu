@@ -1,22 +1,26 @@
-# Ignore build artifacts
-.next/
-out/
-dist/
-build/
-.turbo/
-.cache/
+# Ignore Next.js generated file
+next-env.d.ts
 
-# Node
+# Node / deps
 node_modules/
+.pnpm-store/
+
+# Build
+.next/
+dist/
+out/
+build/
+.cache/
+.turbo/
 
 # Env
 .env
+.env.*.local
 *.env
 *.env.local
 
-# Logs
-*.log
-
-# Ignore auto-generated Next.js TS types
-.next/dev/types/
-.next/dev/types/routes.d.ts
+# Misc
+.DS_Store
+Thumbs.db
+*.pem
+*.tsbuildinfos
