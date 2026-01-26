@@ -131,7 +131,7 @@ export default function CollectionsGrid() {
           <div className="h-[350px] md:col-span-7 md:h-full">
             <CollectionCard
               isLarge
-              title="Golden Oud Edition"
+              title="Golden Oud"
               subtitle="The pinnacle of luxury. A profound journey into the heart of Andalusia."
               image="/images/collections/golden-oud.png"
               className="h-full w-full"
@@ -140,7 +140,7 @@ export default function CollectionsGrid() {
           <div className="flex h-auto flex-col gap-4 md:col-span-5 md:h-full">
             <div className="h-[250px] md:h-[46%]">
               <CollectionCard
-                title="Bleu Citrus Set"
+                title="Bleu Citrus"
                 subtitle="Vibrant, fresh, and full of life."
                 image="/images/collections/bleu-citrus.png"
                 className="h-full w-full"

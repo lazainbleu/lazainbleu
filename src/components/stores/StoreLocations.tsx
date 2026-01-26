@@ -12,10 +12,9 @@ export default function StoreLocations() {
     { lat: 51.5074, lng: -0.1278, label: 'London' },
   ]
 
-  // Jalur antar kota
   const flightPaths = [
-    { from: cities[0], to: cities[2] }, // Malang to Paris
-    { from: cities[1], to: cities[3] }, // Jakarta to London
+    { from: cities[0], to: cities[2] },
+    { from: cities[1], to: cities[3] },
   ]
 
   return (
@@ -23,7 +22,7 @@ export default function StoreLocations() {
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-neutral-50/30 to-transparent dark:via-neutral-900/20" />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Header Section - Unchanged */}
+        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -56,13 +55,12 @@ export default function StoreLocations() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8 }}
           className="mb-20"
         >
           <div className="relative mx-auto max-w-3xl">
             <div className="bg-gradient-radial pointer-events-none absolute inset-0 -z-10 from-neutral-200/40 via-transparent to-transparent blur-3xl dark:from-neutral-800/40" />
             <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-white p-8 shadow-2xl dark:border-neutral-800 dark:bg-neutral-950 md:p-12">
-              {/* Memasukkan props connections */}
               <Globe dots={cities} connections={flightPaths} />
               <p className="mt-6 text-center text-sm text-neutral-500 dark:text-neutral-500">
                 Drag to rotate • Connecting Global Hubs
@@ -71,25 +69,20 @@ export default function StoreLocations() {
           </div>
         </motion.div>
 
-        {/* Cities Grid Section - Unchanged structure but updated cities */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
+        {/* Cities Grid Section */}
+        <div>
           <p className="mb-10 text-center text-sm font-medium uppercase tracking-wider text-neutral-500">
             Featured Locations
           </p>
 
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-5">
-            {cities.map((city, i) => (
+            {cities.map((city) => (
               <motion.div
                 key={city.label}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.5 + i * 0.05 }}
+                transition={{ duration: 0.4 }} // ✅ dihapus semua delay
                 whileHover={{ y: -3, scale: 1.02 }}
                 className={clsx(
                   'group relative overflow-hidden rounded-xl',
@@ -110,7 +103,7 @@ export default function StoreLocations() {
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

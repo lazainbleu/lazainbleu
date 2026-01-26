@@ -84,20 +84,26 @@ export default function Contact({ whatsappNumber = '+6281359049439' }: Props) {
   }
 
   return (
-    <section className="relative w-full bg-[#f5f4f2] py-24 md:py-32">
+    <section className="bg-var(--lb-white) relative w-full py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
-        <div className="mx-auto mb-20 max-w-3xl text-center">
-          <h2 className="text-3xl font-light tracking-tight text-neutral-900">
+        <header className="mb-20 text-center">
+          <h1 className="mb-4 font-serif text-3xl tracking-tight text-[var(--lb-bleu)] md:text-4xl">
             Contact Us
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-neutral-600">
+          </h1>
+
+          <div className="mx-auto mb-5 h-[1px] w-8 bg-[var(--lb-bleu)] opacity-20" />
+          <p className="mb-2 font-sans text-[11px] font-medium uppercase tracking-[0.25em] text-[var(--lb-neutral)] md:text-[12px]">
+            Assistance and Fragrance Guidance
+          </p>
+
+          <p className="mx-auto max-w-2xl font-serif text-base italic leading-relaxed text-[var(--lb-neutral)] md:text-lg">
             The Lazain Bleu team is here to assist with any enquiries. You will find our
             Headquarters office details, along with dedicated contacts for key areas of
             our maison such as fragrance enquiries, retail partnerships, and private
             client services.
           </p>
-        </div>
+        </header>
 
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           {/* Left Column */}
@@ -205,10 +211,12 @@ export default function Contact({ whatsappNumber = '+6281359049439' }: Props) {
                 type="submit"
                 disabled={isSubmitting || isSuccess}
                 className={clsx(
-                  'mt-3 flex w-full items-center justify-center gap-3 rounded-full px-8 py-4 text-sm font-semibold uppercase tracking-wide transition',
-                  isSuccess
-                    ? 'bg-green-600 text-white'
-                    : 'bg-neutral-900 text-white hover:bg-neutral-800',
+                  'mt-3 flex w-full items-center justify-center gap-3 rounded-full px-8 py-4 text-sm font-semibold uppercase tracking-wide transition-colors duration-300',
+                  // default button
+                  'bg-[var(--lb-bleu)] text-[var(--lb-white)] hover:bg-[#0c1422]',
+                  // success
+                  isSuccess && 'bg-green-600 text-[var(--lb-white)]',
+                  // disabled (jangan ubah warna, cuma opacity)
                   (isSubmitting || isSuccess) && 'cursor-not-allowed opacity-70'
                 )}
               >

@@ -7,7 +7,6 @@ import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { IconShoppingBag } from '@tabler/icons-react'
 
-// --- Types ---
 interface Product {
   id: string
   name: string
@@ -20,14 +19,12 @@ interface Product {
   slug: string
 }
 
-// --- Mock Data ---
 const products: Product[] = [
   {
     id: '1',
     name: 'Tom Ford Ombré Leather',
     type: 'EAU DE PARFUM',
     price: 'Rp 3.499.999',
-    unitPrice: '100ml',
     image: '/images/products/tom-ford1.png',
     hoverImage: '/images/products/tom-ford2.png',
     slug: 'apres-alpine',
@@ -58,7 +55,6 @@ const products: Product[] = [
     name: 'Lattafa Khamrah',
     type: 'EAU DE PARFUM',
     price: 'Rp 499.999',
-    unitPrice: '100ml',
     image: '/images/products/lattafa-khamrah1.png',
     hoverImage: '/images/products/lattafa-khamrah2.png',
     slug: 'crema-di-capri',
@@ -68,83 +64,44 @@ const products: Product[] = [
 
 export default function FeaturedProducts() {
   return (
-    <section
-      className={cn(
-        'bg-[var(--lb-white)] px-4 py-16',
-        'md:py-24', // Sedikit dikurangi dari 28 agar lebih compact
-        'selection:bg-[var(--lb-bleu)] selection:text-[var(--lb-white)]'
-      )}
-    >
+    <section className="bg-[var(--lb-white)] px-4 py-16 selection:bg-[var(--lb-bleu)] selection:text-[var(--lb-white)] md:py-24">
       <div className="mx-auto max-w-[1440px]">
-        {/* --- Header Section --- */}
-        {/* Masih menggunakan motion halus untuk header agar tetap elegan, tapi static untuk produk */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }} // ✅ animasi langsung tanpa delay
           className="mb-10 space-y-4 text-center md:mb-14"
         >
           <h2 className="font-serif text-3xl tracking-tight text-[var(--lb-bleu)] md:text-4xl">
-            Sprezzatura with every Spritz
+            Effortless Elegance in Every Scent
           </h2>
           <div className="bg-[var(--lb-bleu)]/20 mx-auto my-4 h-[1px] w-12" />
-          <p
-            className={cn(
-              'mx-auto max-w-2xl font-light leading-relaxed tracking-wide text-[var(--lb-neutral)]',
-              'text-xs md:text-sm'
-            )}
-          >
-            Lazain Bleu combines Andalusian elegance with Parisian perfumery art.
+          <p className="mx-auto max-w-2xl text-xs font-light leading-relaxed tracking-wide text-[var(--lb-neutral)] md:text-sm">
+            Lazain Bleu blends Andalusian grace with Parisian craftsmanship.
             <br className="hidden md:block" />
-            Our fragrances embody timeless beauty to create an incomparably luxurious
-            experience.
+            Each fragrance is a quiet testament to timeless refinement and contemporary
+            luxury.
           </p>
         </motion.div>
 
-        {/* --- Product Grid --- */}
-        <div
-          className={cn(
-            // Mobile: Horizontal Scroll Snap
-            'scrollbar-hide -mx-4 flex snap-x snap-mandatory overflow-x-auto px-4 pb-6',
-            // Desktop: Grid Layout
-            'md:mx-0 md:grid md:grid-cols-4 md:gap-6 md:overflow-visible md:pb-0 lg:gap-8'
-          )}
-        >
+        {/* Product Grid */}
+        <div className="scrollbar-hide -mx-4 flex snap-x snap-mandatory overflow-x-auto px-4 pb-6 md:mx-0 md:grid md:grid-cols-4 md:gap-6 md:overflow-visible md:pb-0 lg:gap-8">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
 
-        {/* --- Marketplace Button --- */}
-        <div
-          className={cn(
-            'text-center',
-            'mt-10', // Mobile: Jarak diperkecil (sebelumnya 12/20)
-            'md:mt-16' // Desktop: Jarak diperkecil (sebelumnya 24)
-          )}
-        >
+        {/* Marketplace Button */}
+        <div className="mt-10 text-center md:mt-16">
           <a
             href="https://shopee.co.id/lazainbleu"
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(
-              'group relative inline-flex items-center justify-center overflow-hidden border border-[var(--lb-bleu)]',
-              'px-10 py-3.5',
-              'md:px-12 md:py-4',
-              'transition-all duration-300 active:scale-95' // Removed shadow on hover for cleaner look
-            )}
+            className="group relative inline-flex items-center justify-center overflow-hidden border border-[var(--lb-bleu)] px-10 py-3.5 transition-all duration-300 active:scale-95 md:px-12 md:py-4"
           >
-            {/* Hover Fill Effect */}
             <span className="absolute inset-0 h-full w-full translate-y-full bg-[var(--lb-bleu)] transition-transform duration-500 ease-out group-hover:translate-y-0" />
-
-            {/* Button Text */}
-            <span
-              className={cn(
-                'relative z-10 flex items-center gap-2 font-bold uppercase tracking-[0.25em] text-[var(--lb-bleu)] transition-colors duration-500 group-hover:text-[var(--lb-white)] md:gap-3',
-                'text-[9px] md:text-[10px]'
-              )}
-            >
+            <span className="relative z-10 flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.25em] text-[var(--lb-bleu)] transition-colors duration-500 group-hover:text-[var(--lb-white)] md:gap-3 md:text-[10px]">
               Discover Us on Marketplace
               <svg
                 className="h-3 w-3 transition-transform duration-500 group-hover:translate-x-1"
@@ -177,7 +134,6 @@ export default function FeaturedProducts() {
   )
 }
 
-// --- Sub-component: Static & Performant ---
 function ProductCard({ product }: { product: Product }) {
   return (
     <Link
@@ -185,44 +141,35 @@ function ProductCard({ product }: { product: Product }) {
       className="group block min-w-[280px] flex-shrink-0 snap-center md:min-w-0"
     >
       <div className="flex h-full flex-col">
-        {/* Image Frame */}
-        <div
-          className={cn(
-            'relative mb-4 aspect-[4/5] overflow-hidden bg-white',
-            'border border-[var(--lb-border)]',
-            'group-hover:border-[var(--lb-bleu)]/30 transition-colors duration-300'
-          )}
-        >
-          {/* Badge */}
+        <div className="group-hover:border-[var(--lb-bleu)]/30 relative mb-4 aspect-[4/5] overflow-hidden border border-[var(--lb-border)] bg-[var(--lb-white)] transition-colors duration-300">
           {product.isNew && (
             <span className="absolute left-3 top-3 z-20 bg-[var(--lb-bleu)] px-3 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--lb-white)]">
               New
             </span>
           )}
 
-          {/* Image 1 (Default) */}
-          <div className="absolute inset-0 flex items-center justify-center p-8 transition-opacity duration-500 group-hover:opacity-0">
+          {/* Images */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }} // ✅ animasi langsung tanpa delay
+            className="absolute inset-0"
+          >
             <Image
               src={product.image}
               alt={product.name}
               fill
-              sizes="(max-width: 768px) 100vw, 25vw"
-              className="object-contain p-2 mix-blend-multiply"
+              className="object-cover transition-opacity duration-500 group-hover:opacity-0"
             />
-          </div>
-
-          {/* Image 2 (Hover) */}
-          <div className="absolute inset-0 flex scale-105 items-center justify-center p-8 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
             <Image
               src={product.hoverImage || product.image}
-              alt={`${product.name} alternate view`}
+              alt={`${product.name} hover`}
               fill
-              sizes="(max-width: 768px) 100vw, 25vw"
-              className="object-contain p-2 mix-blend-multiply"
+              className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
             />
-          </div>
+          </motion.div>
 
-          {/* Quick Action Button - Muncul Smooth */}
+          {/* Quick Action */}
           <div className="absolute bottom-4 right-4 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
             <div className="hover:bg-[var(--lb-bleu)]/90 rounded-full bg-[var(--lb-bleu)] p-2.5 text-white shadow-md">
               <IconShoppingBag size={16} stroke={1.5} />
@@ -230,17 +177,11 @@ function ProductCard({ product }: { product: Product }) {
           </div>
         </div>
 
-        {/* Text Details */}
+        {/* Text */}
         <div className="mt-auto space-y-1 px-1 text-center md:text-left">
-          <h3
-            className={cn(
-              'text-[12px] font-bold uppercase tracking-[0.2em] text-[var(--lb-bleu)] transition-colors',
-              'group-hover:text-[var(--lb-bleu)]/80'
-            )}
-          >
+          <h3 className="group-hover:text-[var(--lb-bleu)]/80 text-[12px] font-bold uppercase tracking-[0.2em] text-[var(--lb-bleu)]">
             {product.name}
           </h3>
-
           <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
             {product.type && (
               <p className="text-[var(--lb-neutral)]/80 text-[9px] font-light uppercase tracking-widest">
