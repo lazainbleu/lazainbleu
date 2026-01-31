@@ -4,13 +4,14 @@ import React, { useCallback } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Trash2 } from 'lucide-react'
+import { formatPrice } from '@/lib/products'
 
 export type CartItemType = {
   id: string
   name: string
   image?: string // public path or external url supported by next/image config
   variant?: string | null
-  priceCents: number // price in cents (e.g. Rp 100.000 => 10000000 if using cent-of-idr) — keep consistent
+  priceCents: number // price in IDR (e.g., 1599000 for Rp 1.599.000)
   quantity: number
 }
 
@@ -21,9 +22,6 @@ type Props = {
   minQty?: number
   maxQty?: number
 }
-
-const formatCurrency = (cents: number, locale = 'id-ID', currency = 'IDR') =>
-  new Intl.NumberFormat(locale, { style: 'currency', currency }).format(cents / 100)
 
 function CartItemComponent({
   item,
@@ -81,7 +79,7 @@ function CartItemComponent({
           </div>
 
           <div className="text-sm font-medium text-neutral-900">
-            {formatCurrency(item.priceCents)}
+            {formatPrice(item.priceCents)}
           </div>
         </div>
 
@@ -123,7 +121,7 @@ function CartItemComponent({
 
           <div className="flex items-center gap-3">
             <div className="text-sm text-neutral-600">
-              {formatCurrency(item.priceCents * item.quantity)}
+              {formatPrice(item.priceCents * item.quantity)}
             </div>
             <button
               aria-label={`Hapus ${item.name}`}

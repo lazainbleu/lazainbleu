@@ -135,7 +135,7 @@ export default function ProductDetailClient({ product, isOutOfStock }: any) {
                 {
                   icon: <IconTruck size={20} />,
                   title: 'Free Shipping',
-                  desc: 'Orders over Rp500.000',
+                  desc: 'Orders over IDR 2.000.000',
                 },
                 {
                   icon: <IconRefresh size={20} />,

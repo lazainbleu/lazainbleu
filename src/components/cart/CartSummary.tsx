@@ -3,6 +3,7 @@
 import React, { useMemo } from 'react'
 
 import { ShoppingCart } from 'lucide-react'
+import { formatPrice } from '@/lib/products'
 
 import type { CartItemType } from './CartItem'
 
@@ -10,14 +11,11 @@ type Props = {
   items: CartItemType[]
   currency?: string // e.g. "IDR"
   locale?: string // e.g. "id-ID"
-  shippingCents?: number // fixed shipping cost in cents (optional)
-  freeShippingThresholdCents?: number | null // threshold for free shipping
+  shippingCents?: number // fixed shipping cost in IDR (optional)
+  freeShippingThresholdCents?: number | null // threshold for free shipping in IDR
   onCheckout?: () => void
   onApplyCoupon?: (code: string) => Promise<{ success: boolean; message?: string }>
 }
-
-const defaultFormat = (cents: number, locale = 'id-ID', currency = 'IDR') =>
-  new Intl.NumberFormat(locale, { style: 'currency', currency }).format(cents / 100)
 
 export default function CartSummary({
   items,
@@ -28,7 +26,7 @@ export default function CartSummary({
   onCheckout,
   onApplyCoupon,
 }: Props) {
-  const subtotalCents = useMemo(() => {
+  const subtotal = useMemo(() => {
     // sum digit-by-digit (integer arithmetic)
     let acc = 0
     for (let i = 0; i < items.length; i++) {
@@ -38,15 +36,12 @@ export default function CartSummary({
   }, [items])
 
   const shipping = useMemo(() => {
-    if (
-      freeShippingThresholdCents !== null &&
-      subtotalCents >= freeShippingThresholdCents
-    )
+    if (freeShippingThresholdCents !== null && subtotal >= freeShippingThresholdCents)
       return 0
     return shippingCents
-  }, [subtotalCents, shippingCents, freeShippingThresholdCents])
+  }, [subtotal, shippingCents, freeShippingThresholdCents])
 
-  const totalCents = useMemo(() => subtotalCents + shipping, [subtotalCents, shipping])
+  const total = useMemo(() => subtotal + shipping, [subtotal, shipping])
 
   return (
     <aside className="w-full max-w-md rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
@@ -63,30 +58,24 @@ export default function CartSummary({
       <dl className="space-y-3 text-sm">
         <div className="flex justify-between">
           <dt className="text-neutral-600">Subtotal</dt>
-          <dd className="font-medium">
-            {defaultFormat(subtotalCents, locale, currency)}
-          </dd>
+          <dd className="font-medium">{formatPrice(subtotal)}</dd>
         </div>
 
         <div className="flex justify-between">
           <dt className="text-neutral-600">Biaya kirim</dt>
-          <dd className="font-medium">{defaultFormat(shipping, locale, currency)}</dd>
+          <dd className="font-medium">{formatPrice(shipping)}</dd>
         </div>
 
         <div className="flex justify-between">
           <dt className="text-neutral-600">Diskon</dt>
-          <dd className="font-medium text-emerald-600">
-            - {defaultFormat(0, locale, currency)}
-          </dd>
+          <dd className="font-medium text-emerald-600">- {formatPrice(0)}</dd>
         </div>
       </dl>
 
       <div className="mt-4 border-t border-neutral-100 pt-4">
         <div className="mb-3 flex items-center justify-between">
           <div className="text-sm text-neutral-600">Total</div>
-          <div className="text-lg font-semibold">
-            {defaultFormat(totalCents, locale, currency)}
-          </div>
+          <div className="text-lg font-semibold">{formatPrice(total)}</div>
         </div>
 
         <button
@@ -98,15 +87,10 @@ export default function CartSummary({
         </button>
 
         <div className="mt-3 text-xs text-neutral-500">
-          {freeShippingThresholdCents && subtotalCents < freeShippingThresholdCents ? (
+          {freeShippingThresholdCents && subtotal < freeShippingThresholdCents ? (
             <div>
-              Tambah{' '}
-              {defaultFormat(
-                freeShippingThresholdCents - subtotalCents,
-                locale,
-                currency
-              )}{' '}
-              lagi untuk gratis ongkir.
+              Tambah {formatPrice(freeShippingThresholdCents - subtotal)} lagi untuk
+              gratis ongkir.
             </div>
           ) : (
             <div>Estimasi pengiriman akan dihitung saat checkout.</div>

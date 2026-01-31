@@ -28,11 +28,15 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   return (
     <div
       className={clsx(
-        'fixed inset-0 bg-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden',
+        'fixed inset-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden',
         isOpen
           ? 'z-[70] translate-x-0 opacity-100'
           : 'pointer-events-none z-[-1] -translate-x-full opacity-0'
       )}
+      style={{
+        backgroundColor: 'var(--lb-white)',
+        color: 'var(--lb-bleu)',
+      }}
     >
       <div className="relative flex h-full flex-col p-6">
         {/* Close Button */}
@@ -42,7 +46,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             className="-mr-2 touch-manipulation p-4 active:scale-90"
             aria-label="Close Menu"
           >
-            <X className="h-6 w-6 stroke-[1.2px] text-[#0A192F]" />
+            <X className="h-6 w-6 stroke-[1.2px]" style={{ color: 'var(--lb-bleu)' }} />
           </button>
         </div>
 
@@ -58,7 +62,10 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   'text-xl font-light uppercase tracking-[0.2em] transition-all duration-700',
                   isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 )}
-                style={{ transitionDelay: `${isOpen ? idx * 50 : 0}ms` }}
+                style={{
+                  transitionDelay: `${isOpen ? idx * 50 : 0}ms`,
+                  color: 'var(--lb-bleu)',
+                }}
               >
                 {item.label}
               </Link>
@@ -80,21 +87,30 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               aria-label={accountLabel}
               className="-m-3 p-3 transition-all hover:opacity-50 active:scale-90"
             >
-              <User className="h-5 w-5 stroke-[1.1px]" />
+              <User
+                className="h-5 w-5 stroke-[1.1px]"
+                style={{ color: 'var(--lb-bleu)' }}
+              />
             </Link>
 
             <button
               className="-m-3 p-3 transition-all hover:opacity-50 active:scale-90"
               onClick={() => console.log('Search clicked')}
             >
-              <Search className="h-5 w-5 stroke-[1.1px]" />
+              <Search
+                className="h-5 w-5 stroke-[1.1px]"
+                style={{ color: 'var(--lb-bleu)' }}
+              />
             </button>
 
             <button
               className="-m-3 p-3 transition-all hover:opacity-50 active:scale-90"
               onClick={() => console.log('Globe clicked')}
             >
-              <Globe className="h-5 w-5 stroke-[1.1px]" />
+              <Globe
+                className="h-5 w-5 stroke-[1.1px]"
+                style={{ color: 'var(--lb-bleu)' }}
+              />
             </button>
           </div>
 
@@ -108,7 +124,11 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             {user ? (
               <button
                 onClick={handleSignOut}
-                className="rounded-full border border-neutral-300 px-6 py-3 text-[11px] font-semibold text-neutral-800 hover:border-neutral-900"
+                className="rounded-full px-6 py-3 text-[11px] font-semibold transition-all active:scale-95"
+                style={{
+                  border: '1px solid var(--lb-border)',
+                  color: 'var(--lb-bleu)',
+                }}
               >
                 Logout
               </button>
@@ -117,14 +137,22 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 <Link
                   href="/login"
                   onClick={onClose}
-                  className="rounded-full border border-neutral-300 px-6 py-3 text-[11px] font-semibold text-neutral-800 hover:border-neutral-900"
+                  className="rounded-full px-6 py-3 text-[11px] font-semibold transition-all active:scale-95"
+                  style={{
+                    border: '1px solid var(--lb-border)',
+                    color: 'var(--lb-bleu)',
+                  }}
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
                   onClick={onClose}
-                  className="rounded-full bg-neutral-900 px-6 py-3 text-[11px] font-semibold text-white hover:bg-neutral-800"
+                  className="rounded-full px-6 py-3 text-[11px] font-semibold transition-all active:scale-95"
+                  style={{
+                    backgroundColor: 'var(--lb-bleu)',
+                    color: 'var(--lb-white)',
+                  }}
                 >
                   Register
                 </Link>

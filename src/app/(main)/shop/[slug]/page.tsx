@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 
 import { getProductBySlug, getAllProducts, formatPrice } from '@/lib/products'
-import ProductDetailClient from '@/components/product/ProductDetailClient'
+import ProductDetailClient from '@/components/product/ProductDetail'
 
 type Props = { params: Promise<{ slug: string }> }
 

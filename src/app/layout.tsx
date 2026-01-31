@@ -71,7 +71,7 @@ export const metadata: Metadata = {
 
 // Mobile viewport
 export const viewport: Viewport = {
-  themeColor: '#000000',
+  themeColor: '#0F172A', // pakai lb-bleu (warna brand)
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -103,10 +103,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Preload key assets */}
         <link rel="preload" href="/icon.svg" as="image" />
-
-        {/* Inject structured data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -114,9 +111,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body
-        className={`${inter.variable} bg-[var(--background)] font-sans text-[var(--foreground)] antialiased`}
+        className={`${inter.variable} bg-[var(--lb-white)] text-[var(--lb-bleu)] antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <RootLayoutClient>{children}</RootLayoutClient>
         </ThemeProvider>
       </body>

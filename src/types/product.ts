@@ -4,7 +4,7 @@ export type Product = {
   id: string
   name: string
   slug: string
-  price: number // in cents (IDR)
+  price: number
   description: string
   shortDescription: string
   images: string[]
@@ -17,7 +17,7 @@ export type CartItem = {
   id: string
   name: string
   slug: string
-  price: number
+  price: number // in IDR
   quantity: number
   image: string
   stock: number

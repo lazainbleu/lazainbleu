@@ -90,11 +90,10 @@ export async function getFeaturedProducts(): Promise<Product[]> {
   return products.filter((p) => p.featured)
 }
 
-export function formatPrice(priceInCents: number): string {
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
+export function formatPrice(price: number): string {
+  const formatted = new Intl.NumberFormat('id-ID', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(priceInCents)
+  }).format(price)
+  return `IDR ${formatted}`
 }
