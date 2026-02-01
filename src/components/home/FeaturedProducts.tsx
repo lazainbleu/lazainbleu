@@ -27,7 +27,7 @@ const products: Product[] = [
     price: 'IDR 3.499.999',
     image: '/images/products/tom-ford1.png',
     hoverImage: '/images/products/tom-ford2.png',
-    slug: 'apres-alpine',
+    slug: 'tom-ford-ombre-leather',
     isNew: false,
   },
   {
@@ -47,7 +47,7 @@ const products: Product[] = [
     price: 'IDR 7.399.999',
     image: '/images/products/creed-aventus1.png',
     hoverImage: '/images/products/creed-aventus2.png',
-    slug: 'alpine-candle',
+    slug: 'creed-aventus-2010',
     isNew: false,
   },
   {
@@ -57,7 +57,7 @@ const products: Product[] = [
     price: 'IDR 499.999',
     image: '/images/products/lattafa-khamrah1.png',
     hoverImage: '/images/products/lattafa-khamrah2.png',
-    slug: 'crema-di-capri',
+    slug: 'lattafa-khamrah',
     isNew: false,
   },
 ]
@@ -70,7 +70,7 @@ export default function FeaturedProducts() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }} // ✅ animasi langsung tanpa delay
+          transition={{ duration: 0.6 }}
           className="mb-10 space-y-4 text-center md:mb-14"
         >
           <h2 className="font-serif text-3xl tracking-tight text-[var(--lb-bleu)] md:text-4xl">
@@ -152,7 +152,7 @@ function ProductCard({ product }: { product: Product }) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }} // ✅ animasi langsung tanpa delay
+            transition={{ duration: 0.4 }}
             className="absolute inset-0"
           >
             <Image
