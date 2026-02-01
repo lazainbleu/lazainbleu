@@ -58,24 +58,30 @@ export default function CartSummary({
       <dl className="space-y-3 text-sm">
         <div className="flex justify-between">
           <dt className="text-neutral-600">Subtotal</dt>
-          <dd className="font-medium">{formatPrice(subtotal)}</dd>
+          <dd className="text-sm font-normal text-neutral-700">
+            {formatPrice(subtotal)}
+          </dd>
         </div>
 
         <div className="flex justify-between">
           <dt className="text-neutral-600">Biaya kirim</dt>
-          <dd className="font-medium">{formatPrice(shipping)}</dd>
+          <dd className="text-sm font-normal text-neutral-700">
+            {formatPrice(shipping)}
+          </dd>
         </div>
 
         <div className="flex justify-between">
           <dt className="text-neutral-600">Diskon</dt>
-          <dd className="font-medium text-emerald-600">- {formatPrice(0)}</dd>
+          <dd className="text-sm font-normal text-emerald-600">- {formatPrice(0)}</dd>
         </div>
       </dl>
 
       <div className="mt-4 border-t border-neutral-100 pt-4">
         <div className="mb-3 flex items-center justify-between">
           <div className="text-sm text-neutral-600">Total</div>
-          <div className="text-lg font-semibold">{formatPrice(total)}</div>
+          <div className="text-base font-medium text-neutral-900">
+            {formatPrice(total)}
+          </div>
         </div>
 
         <button

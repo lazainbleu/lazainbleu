@@ -56,7 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </p>
 
         {/* Price */}
-        <p className="text-sm font-semibold text-[var(--lb-bleu)] md:text-lg">
+        <p className="text-xs font-medium text-[var(--lb-bleu)] md:text-sm">
           {formatPrice(product.price)}
         </p>
 

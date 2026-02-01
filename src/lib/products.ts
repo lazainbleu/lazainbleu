@@ -14,7 +14,7 @@ export const products: Product[] = [
       '/images/products/creed-aventus1.png',
       '/images/products/creed-aventus2.png',
     ],
-    stock: 1,
+    stock: 0,
     category: 'Eau de Parfum',
     featured: true,
   },

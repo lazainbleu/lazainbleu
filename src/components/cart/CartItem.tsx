@@ -78,7 +78,7 @@ function CartItemComponent({
             )}
           </div>
 
-          <div className="text-sm font-medium text-neutral-900">
+          <div className="text-xs font-normal text-neutral-600">
             {formatPrice(item.priceCents)}
           </div>
         </div>
@@ -120,7 +120,7 @@ function CartItemComponent({
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="text-sm text-neutral-600">
+            <div className="text-xs font-normal text-neutral-500">
               {formatPrice(item.priceCents * item.quantity)}
             </div>
             <button

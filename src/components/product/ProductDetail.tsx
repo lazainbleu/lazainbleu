@@ -101,7 +101,7 @@ export default function ProductDetailClient({ product, isOutOfStock }: any) {
               {product.name}
             </h1>
 
-            <p className="mb-5 text-xl font-semibold text-[var(--lb-bleu)] md:mb-6 md:text-2xl">
+            <p className="mb-5 text-lg font-medium text-[var(--lb-bleu)] md:mb-6 md:text-xl">
               {formatPrice(product.price)}
             </p>
 
