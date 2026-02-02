@@ -107,7 +107,7 @@ export default function Footer() {
             <h2 className="text-xl font-light uppercase tracking-[0.4em] text-[#0A192F]">
               LAZAIN<span className="font-semibold">BLEU</span>
             </h2>
-            <span className="text-[10px] uppercase tracking-[0.4em] text-[var(--lb-bleu)]">
+            <span className="block text-center text-[clamp(10px,2vw,12px)] uppercase tracking-[0.4em] text-[var(--lb-bleu)]">
               Luxury, Inspired by Faith and Heritage
             </span>
           </div>

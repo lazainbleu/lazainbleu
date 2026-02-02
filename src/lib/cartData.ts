@@ -2,19 +2,19 @@ import type { CartItemType } from '@/components/cart/CartItem'
 
 export const getInitialCart = (): CartItemType[] => [
   {
-    id: 'prod-1',
-    name: 'Lazain Bleu Eau de Parfum',
-    variant: '50ml',
-    priceCents: 1599000,
+    id: 'prod-001',
+    name: 'Creed Aventus (2010)',
+    variant: '100ml', // bisa disesuaikan kalau mau
+    priceCents: 7399999,
     quantity: 1,
-    image: '/images/parfum-50ml.jpg',
+    image: '/images/products/creed-aventus1.png',
   },
   {
-    id: 'prod-2',
-    name: 'Lazain Bleu Body Lotion',
-    variant: '200ml',
-    priceCents: 890000,
-    quantity: 2,
-    image: '/images/body-lotion.jpg',
+    id: 'prod-002',
+    name: 'Tom Ford Ombre Leather',
+    variant: '100ml',
+    priceCents: 3499999,
+    quantity: 1,
+    image: '/images/products/tom-ford1.png',
   },
 ]

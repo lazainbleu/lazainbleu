@@ -31,12 +31,12 @@ export default function LoginPage() {
     const password = (form.elements.namedItem('password') as HTMLInputElement).value
 
     if (!EMAIL_REGEX.test(email)) {
-      setError('Masukkan email yang valid.')
+      setError('Please enter a valid email address.')
       return
     }
 
     if (!password) {
-      setError('Password wajib diisi.')
+      setError('Password is required.')
       return
     }
 
@@ -48,13 +48,13 @@ export default function LoginPage() {
       })
 
       if (signInError) {
-        setError(signInError.message || 'Login gagal. Coba lagi.')
+        setError(signInError.message || 'Login failed. Please try again.')
         return
       }
 
       router.replace('/profile')
     } catch (err: unknown) {
-      setError('Login gagal. Coba lagi.')
+      setError('Login failed. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -68,10 +68,10 @@ export default function LoginPage() {
             Account
           </p>
           <h1 className="mt-4 text-3xl font-light tracking-tight text-neutral-900 md:text-4xl">
-            Masuk ke Lazain Bleu
+            Sign In to Lazain Bleu
           </h1>
           <p className="mt-4 text-base leading-relaxed text-neutral-600">
-            Kelola profil, pesanan, dan pengalaman belanja Anda.
+            Manage your profile, orders, and exclusive shopping experience.
           </p>
         </div>
 
@@ -118,18 +118,18 @@ export default function LoginPage() {
             >
               {isSubmitting ? (
                 <>
-                  <span>Memproses...</span>
+                  <span>Processing...</span>
                   <Loader2 className="h-4 w-4 animate-spin" />
                 </>
               ) : (
-                <span>Masuk</span>
+                <span>Sign In</span>
               )}
             </button>
 
             <p className="text-center text-sm text-neutral-500">
-              Belum punya akun?{' '}
+              Don’t have an account?{' '}
               <Link href="/register" className="font-semibold text-neutral-900">
-                Daftar di sini
+                Create one here
               </Link>
             </p>
           </form>

@@ -37,17 +37,17 @@ export default function RegisterPage() {
     ).value
 
     if (!EMAIL_REGEX.test(email)) {
-      setError('Masukkan email yang valid.')
+      setError('Please enter a valid email address.')
       return
     }
 
     if (password.length < MIN_PASSWORD) {
-      setError(`Password minimal ${MIN_PASSWORD} karakter.`)
+      setError(`Password must be at least ${MIN_PASSWORD} characters.`)
       return
     }
 
     if (password !== confirmPassword) {
-      setError('Konfirmasi password tidak sama.')
+      setError('Password confirmation does not match.')
       return
     }
 
@@ -63,7 +63,7 @@ export default function RegisterPage() {
       })
 
       if (signUpError) {
-        setError(signUpError.message || 'Registrasi gagal. Coba lagi.')
+        setError(signUpError.message || 'Registration failed. Please try again.')
         return
       }
 
@@ -72,10 +72,12 @@ export default function RegisterPage() {
         return
       }
 
-      setSuccessMessage('Registrasi berhasil. Silakan cek email untuk konfirmasi akun.')
+      setSuccessMessage(
+        'Registration successful. Please check your email to confirm your account.'
+      )
       form.reset()
     } catch (err: unknown) {
-      setError('Registrasi gagal. Coba lagi.')
+      setError('Registration failed. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -89,16 +91,16 @@ export default function RegisterPage() {
             Account
           </p>
           <h1 className="mt-4 text-3xl font-light tracking-tight text-neutral-900 md:text-4xl">
-            Buat Akun Lazain Bleu
+            Create Your Lazain Bleu Account
           </h1>
           <p className="mt-4 text-base leading-relaxed text-neutral-600">
-            Daftar untuk menyimpan pesanan dan update koleksi terbaru.
+            Register to save your orders and receive updates on our latest collections.
           </p>
         </div>
 
         <div className="rounded-3xl border border-neutral-200 bg-[#fbfbfa] p-10 shadow-[0_8px_25px_rgba(0,0,0,0.03)]">
           <h2 className="mb-8 text-sm font-semibold uppercase tracking-wide text-neutral-500">
-            Registrasi
+            Registration
           </h2>
 
           <form onSubmit={handleSubmit} className="grid gap-8" noValidate>
@@ -127,11 +129,11 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <FieldLabel>Konfirmasi Password</FieldLabel>
+              <FieldLabel>Confirm Password</FieldLabel>
               <input
                 name="confirmPassword"
                 type="password"
-                placeholder="Ulangi Password"
+                placeholder="Repeat Password"
                 autoComplete="new-password"
                 disabled={isSubmitting}
                 className="w-full appearance-none border-b border-neutral-300 bg-transparent py-3 text-sm text-neutral-900 outline-none transition focus:border-neutral-800 focus:bg-transparent disabled:bg-transparent"
@@ -157,18 +159,18 @@ export default function RegisterPage() {
             >
               {isSubmitting ? (
                 <>
-                  <span>Memproses...</span>
+                  <span>Processing...</span>
                   <Loader2 className="h-4 w-4 animate-spin" />
                 </>
               ) : (
-                <span>Daftar</span>
+                <span>Create Account</span>
               )}
             </button>
 
             <p className="text-center text-sm text-neutral-500">
-              Sudah punya akun?{' '}
+              Already have an account?{' '}
               <Link href="/login" className="font-semibold text-neutral-900">
-                Masuk di sini
+                Sign in here
               </Link>
             </p>
           </form>

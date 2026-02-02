@@ -148,7 +148,7 @@ function ActionIcons({
   isLoading: boolean
 }) {
   const accountHref = user ? '/profile' : '/login'
-  const accountLabel = user ? 'Profile' : 'Login'
+  const accountLabel = user ? 'Profile' : 'Account'
 
   return (
     <div className="flex items-center gap-1.5 md:gap-4">

@@ -34,7 +34,7 @@ const formatDate = (value?: string | null) => {
   if (!value) return '-'
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return '-'
-  return new Intl.DateTimeFormat('id-ID', {
+  return new Intl.DateTimeFormat('en-US', {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(date)
@@ -105,7 +105,7 @@ export default function ProfilePage() {
       if (!isMounted) return
 
       if (error) {
-        setProfileError(error.message || 'Gagal memuat data profil.')
+        setProfileError(error.message || 'Failed to load profile data.')
         setIsProfileLoading(false)
         return
       }
@@ -154,18 +154,18 @@ export default function ProfilePage() {
     }
 
     const requiredFields: Array<{ key: keyof ProfileForm; label: string }> = [
-      { key: 'full_name', label: 'Nama lengkap' },
-      { key: 'phone', label: 'Nomor HP' },
-      { key: 'address_line1', label: 'Alamat' },
-      { key: 'city', label: 'Kota' },
-      { key: 'province', label: 'Provinsi' },
-      { key: 'postal_code', label: 'Kode pos' },
-      { key: 'country', label: 'Negara' },
+      { key: 'full_name', label: 'Full Name' },
+      { key: 'phone', label: 'Phone Number' },
+      { key: 'address_line1', label: 'Address' },
+      { key: 'city', label: 'City' },
+      { key: 'province', label: 'Province/State' },
+      { key: 'postal_code', label: 'Postal Code' },
+      { key: 'country', label: 'Country' },
     ]
 
     for (const field of requiredFields) {
       if (!payload[field.key]) {
-        setProfileError(`${field.label} wajib diisi.`)
+        setProfileError(`${field.label} is required.`)
         return
       }
     }
@@ -178,9 +178,9 @@ export default function ProfilePage() {
     })
 
     if (error) {
-      setProfileError(error.message || 'Gagal menyimpan data profil.')
+      setProfileError(error.message || 'Failed to save profile.')
     } else {
-      setSaveMessage('Profil berhasil diperbarui.')
+      setSaveMessage('Profile updated successfully.')
     }
 
     setIsSaving(false)
@@ -194,10 +194,10 @@ export default function ProfilePage() {
             Account
           </p>
           <h1 className="mt-4 text-3xl font-light tracking-tight text-neutral-900 md:text-4xl">
-            Profil Anda
+            Your Profile
           </h1>
           <p className="mt-4 text-base leading-relaxed text-neutral-600">
-            Lihat detail akun dan kelola akses Anda.
+            View your account details and manage access.
           </p>
         </div>
 
@@ -205,7 +205,7 @@ export default function ProfilePage() {
           {isLoading ? (
             <div className="flex items-center justify-center gap-3 text-sm text-neutral-500">
               <Loader2 className="h-4 w-4 animate-spin" />
-              <span>Memuat profil...</span>
+              <span>Loading profile...</span>
             </div>
           ) : user ? (
             <div className="space-y-10">
@@ -232,7 +232,7 @@ export default function ProfilePage() {
                 </div>
                 <div className="flex items-center justify-between border-b border-neutral-200 pb-3">
                   <span className="uppercase tracking-[0.2em] text-neutral-400">
-                    Dibuat
+                    Created At
                   </span>
                   <span className="font-medium text-neutral-900">
                     {formatDate(user.created_at)}
@@ -240,7 +240,7 @@ export default function ProfilePage() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="uppercase tracking-[0.2em] text-neutral-400">
-                    Login Terakhir
+                    Last Login
                   </span>
                   <span className="font-medium text-neutral-900">
                     {formatDate(user.last_sign_in_at)}
@@ -250,23 +250,23 @@ export default function ProfilePage() {
 
               <div className="border-t border-neutral-200 pt-8">
                 <h2 className="mb-6 text-sm font-semibold uppercase tracking-wide text-neutral-500">
-                  Data Pengiriman
+                  Shipping Information
                 </h2>
 
                 {isProfileLoading ? (
                   <div className="flex items-center gap-3 text-sm text-neutral-500">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    <span>Memuat data pengiriman...</span>
+                    <span>Loading shipping data...</span>
                   </div>
                 ) : (
                   <form onSubmit={handleSave} className="grid gap-8">
                     <div className="grid gap-8 md:grid-cols-2">
                       <div>
-                        <FieldLabel>Nama Lengkap</FieldLabel>
+                        <FieldLabel>Full Name</FieldLabel>
                         <input
                           name="full_name"
                           type="text"
-                          placeholder="Nama penerima"
+                          placeholder="Recipient Name"
                           value={formData.full_name}
                           onChange={handleChange('full_name')}
                           disabled={isSaving}
@@ -274,7 +274,7 @@ export default function ProfilePage() {
                         />
                       </div>
                       <div>
-                        <FieldLabel>Nomor HP</FieldLabel>
+                        <FieldLabel>Phone Number</FieldLabel>
                         <input
                           name="phone"
                           type="tel"
@@ -288,11 +288,11 @@ export default function ProfilePage() {
                     </div>
 
                     <div>
-                      <FieldLabel>Alamat</FieldLabel>
+                      <FieldLabel>Address</FieldLabel>
                       <textarea
                         name="address_line1"
                         rows={3}
-                        placeholder="Nama jalan, nomor rumah, RT/RW"
+                        placeholder="Street, House number, etc."
                         value={formData.address_line1}
                         onChange={handleChange('address_line1')}
                         disabled={isSaving}
@@ -302,11 +302,11 @@ export default function ProfilePage() {
 
                     <div className="grid gap-8 md:grid-cols-3">
                       <div>
-                        <FieldLabel>Kota</FieldLabel>
+                        <FieldLabel>City</FieldLabel>
                         <input
                           name="city"
                           type="text"
-                          placeholder="Kota"
+                          placeholder="City"
                           value={formData.city}
                           onChange={handleChange('city')}
                           disabled={isSaving}
@@ -314,11 +314,11 @@ export default function ProfilePage() {
                         />
                       </div>
                       <div>
-                        <FieldLabel>Provinsi</FieldLabel>
+                        <FieldLabel>Province/State</FieldLabel>
                         <input
                           name="province"
                           type="text"
-                          placeholder="Provinsi"
+                          placeholder="Province/State"
                           value={formData.province}
                           onChange={handleChange('province')}
                           disabled={isSaving}
@@ -326,11 +326,11 @@ export default function ProfilePage() {
                         />
                       </div>
                       <div>
-                        <FieldLabel>Kode Pos</FieldLabel>
+                        <FieldLabel>Postal Code</FieldLabel>
                         <input
                           name="postal_code"
                           type="text"
-                          placeholder="Kode pos"
+                          placeholder="Postal Code"
                           value={formData.postal_code}
                           onChange={handleChange('postal_code')}
                           disabled={isSaving}
@@ -341,11 +341,11 @@ export default function ProfilePage() {
 
                     <div className="grid gap-8 md:grid-cols-2">
                       <div>
-                        <FieldLabel>Negara</FieldLabel>
+                        <FieldLabel>Country</FieldLabel>
                         <input
                           name="country"
                           type="text"
-                          placeholder="Negara"
+                          placeholder="Country"
                           value={formData.country}
                           onChange={handleChange('country')}
                           disabled={isSaving}
@@ -353,11 +353,11 @@ export default function ProfilePage() {
                         />
                       </div>
                       <div>
-                        <FieldLabel>Catatan Alamat</FieldLabel>
+                        <FieldLabel>Address Note</FieldLabel>
                         <input
                           name="address_note"
                           type="text"
-                          placeholder="Patokan, lantai, atau detail lain"
+                          placeholder="Landmarks, floor, or other details"
                           value={formData.address_note}
                           onChange={handleChange('address_note')}
                           disabled={isSaving}
@@ -387,11 +387,11 @@ export default function ProfilePage() {
                     >
                       {isSaving ? (
                         <>
-                          <span>Menyimpan...</span>
+                          <span>Saving...</span>
                           <Loader2 className="h-4 w-4 animate-spin" />
                         </>
                       ) : (
-                        <span>Simpan Perubahan</span>
+                        <span>Save Changes</span>
                       )}
                     </button>
                   </form>
@@ -410,7 +410,7 @@ export default function ProfilePage() {
               >
                 {isSigningOut ? (
                   <>
-                    <span>Memproses...</span>
+                    <span>Processing...</span>
                     <Loader2 className="h-4 w-4 animate-spin" />
                   </>
                 ) : (
@@ -424,7 +424,7 @@ export default function ProfilePage() {
           ) : (
             <div className="space-y-6 text-center">
               <p className="text-sm text-neutral-600">
-                Anda belum login. Silakan masuk atau buat akun untuk melanjutkan.
+                You are not logged in. Please login or create an account to continue.
               </p>
               <div className="flex flex-col items-center gap-3">
                 <Link
