@@ -148,7 +148,7 @@ function ActionIcons({
   isLoading: boolean
 }) {
   const accountHref = user ? '/profile' : '/login'
-  const accountLabel = user ? 'Profile' : 'Account'
+  const accountLabel = user ? 'Profile' : 'Login'
 
   return (
     <div className="flex items-center gap-1.5 md:gap-4">
@@ -162,9 +162,9 @@ function ActionIcons({
         aria-label={accountLabel}
       >
         <User className="h-5 w-5 stroke-[1.1px]" />
-        <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
+        {/* <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
           {isLoading ? 'Account' : accountLabel}
-        </span>
+        </span> */}
         <span
           className={clsx(
             'h-1.5 w-1.5 rounded-full',

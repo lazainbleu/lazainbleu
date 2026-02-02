@@ -134,7 +134,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               </button>
             ) : (
               <>
-                <Link
+                {/* <Link
                   href="/login"
                   onClick={onClose}
                   className="rounded-full px-6 py-3 text-[11px] font-semibold transition-all active:scale-95"
@@ -155,7 +155,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   }}
                 >
                   Register
-                </Link>
+                </Link> */}
               </>
             )}
           </div>
