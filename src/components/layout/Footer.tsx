@@ -11,6 +11,10 @@ import {
 } from 'phosphor-react'
 import { clsx } from 'clsx'
 
+/* ============================
+   CONSTANTS (CLEAN + ORGANIZED)
+   ============================ */
+
 const FOOTER_LINKS = [
   {
     title: 'Collections',
@@ -39,6 +43,18 @@ const FOOTER_LINKS = [
     ],
   },
 ]
+
+const SOCIAL_LINKS = [
+  { Icon: InstagramLogo, href: 'https://www.instagram.com/lazainbleu' },
+  { Icon: TiktokLogo, href: 'https://www.tiktok.com/@lazainbleu' },
+  { Icon: PinterestLogo, href: 'https://www.pinterest.com/lazainbleu' },
+  { Icon: YoutubeLogo, href: 'https://www.youtube.com/@LazainBleu' },
+  { Icon: LinkedinLogo, href: 'https://www.linkedin.com/company/lazainbleu/' },
+]
+
+/* ============================
+   FOOTER COMPONENT
+   ============================ */
 
 export default function Footer() {
   return (
@@ -88,6 +104,10 @@ export default function Footer() {
                     <li key={link.label}>
                       <Link
                         href={link.href}
+                        target={link.href.startsWith('http') ? '_blank' : undefined}
+                        rel={
+                          link.href.startsWith('http') ? 'noopener noreferrer' : undefined
+                        }
                         className="text-[13px] font-light text-[#0A192F]/80 transition-colors duration-300 hover:text-[#C5A27D]"
                       >
                         {link.label}
@@ -112,21 +132,14 @@ export default function Footer() {
             </span>
           </div>
 
-          {/* Social Icons w/ Ripple Animation */}
+          {/* Social Icons */}
           <div className="flex gap-8">
-            {[
-              { Icon: InstagramLogo, href: 'https://www.instagram.com/lazainbleu' },
-              { Icon: TiktokLogo, href: 'https://www.tiktok.com/@lazainbleu' },
-              { Icon: PinterestLogo, href: 'https://www.pinterest.com/lazainbleu' },
-              { Icon: YoutubeLogo, href: 'https://www.youtube.com/@LazainBleu' },
-              {
-                Icon: LinkedinLogo,
-                href: 'https://www.linkedin.com/company/lazainbleu/',
-              },
-            ].map(({ Icon, href }, idx) => (
+            {SOCIAL_LINKS.map(({ Icon, href }, idx) => (
               <Link
                 key={idx}
                 href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group relative text-[#0A192F] transition-colors duration-500 hover:text-[#08172B]"
               >
                 <span className="duration-600 absolute inset-0 scale-0 rounded-full bg-[#08172B] opacity-0 transition-all group-hover:scale-125 group-hover:opacity-10"></span>
@@ -160,7 +173,7 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Payment Icons - Fully Black, No Animations */}
+            {/* Payment Icons */}
             <div className="flex flex-wrap items-center justify-center gap-5">
               <span className="mr-2 text-[9px] uppercase tracking-[0.2em] text-[#0A192F]">
                 Secure Payment:
@@ -168,7 +181,6 @@ export default function Footer() {
 
               <div className="flex items-center gap-4 text-[#0A192F]">
                 <CreditCard className="h-5 w-5 stroke-[1px]" />
-
                 <div className="text-[10px] font-bold tracking-tighter">VISA</div>
                 <div className="text-[10px] font-bold tracking-tighter">MASTERCARD</div>
                 <div className="text-[10px] font-bold tracking-tighter">JCB</div>
