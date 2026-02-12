@@ -12,3 +12,368 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// ============================================================================
+// USER & AUTHENTICATION
+// ============================================================================
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password      String? // Optional if using OAuth/Supabase auth
+  supabaseId    String?   @unique // Link to Supabase auth
+  emailVerified DateTime?
+
+  // Relations
+  profile   Profile?
+  addresses Address[]
+  cart      Cart?
+  orders    Order[]
+  payments  Payment[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([email])
+  @@index([supabaseId])
+}
+
+model Profile {
+  id        String  @id @default(uuid())
+  userId    String  @unique
+  firstName String?
+  lastName  String?
+  phone     String?
+  avatar    String? // URL to profile picture
+  bio       String?
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// ============================================================================
+// PRODUCTS & INVENTORY
+// ============================================================================
+
+model Product {
+  id              String  @id @default(uuid())
+  sku             String  @unique
+  name            String
+  slug            String  @unique
+  description     String? @db.Text
+  longDescription String? @db.Text
+  category        String // e.g., "Fragrances", "Sets"
+  brand           String?
+
+  // Pricing
+  price         Int // in cents (e.g., 5000 = $50.00)
+  costPrice     Int? // for profit calculation
+  discount      Int? // percentage, 0-100
+  discountPrice Int? // in cents, calculated price
+
+  // Inventory
+  stock    Int    @default(0)
+  reserved Int    @default(0) // items in carts/pending orders
+  weight   Float? // in grams
+
+  // Media
+  images    String[] // Array of image URLs
+  thumbnail String? // Main product image
+
+  // SEO & Marketing
+  metaTitle String?
+  metaDesc  String?
+  tags      String[]
+  featured  Boolean  @default(false)
+
+  // Relations
+  variants   ProductVariant[]
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+
+  @@index([category])
+  @@index([brand])
+  @@index([slug])
+  @@index([featured])
+}
+
+model ProductVariant {
+  id        String  @id @default(uuid())
+  productId String
+  name      String // e.g., "100ml", "Eau de Parfum"
+  value     String? // e.g., "100"
+
+  // Pricing override
+  price     Int? // Override product price if different
+  costPrice Int?
+
+  // Inventory for variant
+  stock    Int @default(0)
+  reserved Int @default(0)
+
+  // Relations
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+}
+
+// ============================================================================
+// SHOPPING CART
+// ============================================================================
+
+model Cart {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  // Relations
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model CartItem {
+  id        String  @id @default(uuid())
+  cartId    String
+  productId String
+  variantId String?
+  quantity  Int     @default(1)
+
+  // Snapshot of price at time of addition (for historical accuracy)
+  pricePerUnit Int // in cents
+
+  // Relations
+  cart    Cart            @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product         @relation(fields: [productId], references: [id], onDelete: Restrict)
+  variant ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId, variantId])
+  @@index([cartId])
+  @@index([productId])
+  @@index([variantId])
+}
+
+// ============================================================================
+// ORDERS & ORDER ITEMS
+// ============================================================================
+
+model Order {
+  id          String @id @default(uuid())
+  userId      String
+  orderNumber String @unique // Human-readable order number
+
+  // Order Details
+  status       OrderStatus @default(PENDING)
+  subtotal     Int // in cents, total before shipping/tax
+  tax          Int         @default(0)
+  shippingCost Int         @default(0)
+  total        Int // in cents
+
+  // Customer Info
+  shippingAddressId String?
+  billingAddressId  String?
+
+  // Shipping & Tracking
+  carrier           String? // e.g., "JNE", "Tiki", "JNT"
+  trackingNumber    String?
+  estimatedDelivery DateTime?
+
+  // Notes
+  notes      String? @db.Text
+  adminNotes String? @db.Text
+
+  // Relations
+  user            User        @relation(fields: [userId], references: [id], onDelete: Restrict)
+  items           OrderItem[]
+  payment         Payment?
+  shippingAddress Address?    @relation("shippingAddress", fields: [shippingAddressId], references: [id], onDelete: SetNull)
+  billingAddress  Address?    @relation("billingAddress", fields: [billingAddressId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([orderNumber])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  productId String
+  variantId String?
+  quantity  Int
+
+  // Price snapshot at time of order
+  pricePerUnit Int // in cents
+  subtotal     Int // in cents
+
+  // Relations
+  order   Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product         @relation(fields: [productId], references: [id], onDelete: Restrict)
+  variant ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+enum OrderStatus {
+  PENDING // Payment pending
+  CONFIRMED // Payment confirmed, preparing
+  PROCESSING // Being picked/packed
+  SHIPPED // In transit
+  DELIVERED // Delivered
+  CANCELLED // Order cancelled
+  REFUNDED // Refunded
+}
+
+// ============================================================================
+// PAYMENTS
+// ============================================================================
+
+model Payment {
+  id      String @id @default(uuid())
+  orderId String @unique
+  userId  String
+
+  // Midtrans Integration
+  midtransTransactionId String? @unique
+  snapToken             String? // Midtrans snap token
+
+  // Payment Details
+  amount   Int // in cents
+  currency String         @default("IDR")
+  method   PaymentMethod?
+  status   PaymentStatus  @default(PENDING)
+
+  // Additional Info
+  bankTransferCode String?
+  vaNumber         String? // Virtual account number
+  billerCode       String? // For some payment methods
+  billKey          String?
+
+  // Webhook & Verification
+  notificationToken String?
+  verificationCode  String?
+
+  // Relations
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  paidAt    DateTime?
+
+  @@index([orderId])
+  @@index([userId])
+  @@index([midtransTransactionId])
+  @@index([status])
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER
+  E_WALLET // GCash, DANA, etc
+  CREDIT_CARD
+  OTHER
+}
+
+enum PaymentStatus {
+  PENDING
+  DEPOSIT
+  SETTLEMENT // Successfully paid
+  EXPIRED
+  CANCELLED
+  DENIED
+  FAILED
+}
+
+// ============================================================================
+// ADDRESSES
+// ============================================================================
+
+model Address {
+  id     String @id @default(uuid())
+  userId String
+
+  // Address Details
+  type      AddressType @default(RESIDENTIAL)
+  label     String? // e.g., "Home", "Office"
+  firstName String
+  lastName  String?
+  phone     String
+  email     String?
+
+  // Full Address
+  street     String // Street address
+  city       String
+  province   String // State/Province
+  postalCode String
+  country    String @default("Indonesia")
+
+  // Additional
+  landmark  String?
+  notes     String?
+  isDefault Boolean @default(false)
+
+  // Relations
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shippingOrders Order[] @relation("shippingAddress")
+  billingOrders  Order[] @relation("billingAddress")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([isDefault])
+}
+
+enum AddressType {
+  RESIDENTIAL
+  COMMERCIAL
+  WAREHOUSE
+}
+
+// ============================================================================
+// AUDIT & LOGGING (Optional, for future use)
+// ============================================================================
+
+model AuditLog {
+  id        String  @id @default(uuid())
+  userId    String?
+  action    String // e.g., "ORDER_CREATED", "PAYMENT_SUCCESS"
+  entity    String? // e.g., "Order", "Payment"
+  entityId  String?
+  changes   Json? // JSON of what changed
+  ipAddress String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}

@@ -13,6 +13,12 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-geist)', 'var(--font-inter)', 'sans-serif'],
       },
+      colors: {
+        'lb-white': 'var(--lb-white)',
+        'lb-bleu': 'var(--lb-bleu)',
+        'lb-neutral': 'var(--lb-neutral)',
+        'lb-border': 'var(--lb-border)',
+      },
     },
   },
   plugins: [],
