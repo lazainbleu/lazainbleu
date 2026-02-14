@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import LuxuryButton from '@/components/ui/LuxuryButton' // Sesuaikan path import
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -29,7 +30,6 @@ const FAQ = () => {
   ]
 
   return (
-    /* Background: --lb-white, Text: --lb-bleu */
     <section className="min-h-screen bg-[var(--lb-white)] px-6 py-20 text-[var(--lb-bleu)] selection:bg-[var(--lb-bleu)] selection:text-[var(--lb-white)] md:px-12">
       <div className="mx-auto max-w-2xl">
         {/* Header Section */}
@@ -65,7 +65,7 @@ const FAQ = () => {
                     {item.q}
                   </span>
 
-                  {/* Icon Custom: Menggunakan variabel bleu */}
+                  {/* Animated Cross/Minus Icon */}
                   <div
                     className="relative ml-4 flex h-3 w-3 flex-shrink-0 items-center justify-center"
                     aria-hidden
@@ -83,7 +83,7 @@ const FAQ = () => {
                   </div>
                 </button>
 
-                {/* Answer Area dengan Animasi Grid yang Halus */}
+                {/* Answer Area with Smooth Expansion */}
                 <div
                   className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                     isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
@@ -104,15 +104,12 @@ const FAQ = () => {
 
         {/* Footer Concierge Section */}
         <footer className="mt-20 border-t border-[var(--lb-border)] pt-10 text-center">
-          <p className="mb-6 font-serif text-base italic text-[var(--lb-neutral)]">
+          <p className="mb-8 font-serif text-base italic text-[var(--lb-neutral)]">
             Still have questions?
           </p>
-          <a
-            href="/contact"
-            className="inline-block border border-[var(--lb-bleu)] px-8 py-3.5 text-[10px] font-medium uppercase tracking-[0.2em] transition-all duration-500 hover:bg-[var(--lb-bleu)] hover:text-[var(--lb-white)] md:text-[11px]"
-          >
-            Contact Our Concierge
-          </a>
+
+          {/* IMPLEMENTASI LUXURY BUTTON */}
+          <LuxuryButton href="/contact">Contact Our Concierge</LuxuryButton>
         </footer>
       </div>
     </section>

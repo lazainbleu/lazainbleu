@@ -1,11 +1,10 @@
 'use client'
 
-import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { cn } from '@/lib/utils'
 import { IconShoppingBag } from '@tabler/icons-react'
+import LuxuryButton from '@/components/ui/LuxuryButton'
 
 interface Product {
   id: string
@@ -69,7 +68,8 @@ export default function FeaturedProducts() {
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="mb-10 space-y-4 text-center md:mb-14"
         >
@@ -92,19 +92,18 @@ export default function FeaturedProducts() {
           ))}
         </div>
 
-        {/* Marketplace Button */}
+        {/* Marketplace Button - Updated with LuxuryButton */}
         <div className="mt-10 text-center md:mt-16">
-          <a
+          <LuxuryButton
             href="https://shopee.co.id/lazainbleu"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center justify-center overflow-hidden border border-[var(--lb-bleu)] px-10 py-3.5 transition-all duration-300 active:scale-95 md:px-12 md:py-4"
+            className="px-12"
           >
-            <span className="absolute inset-0 h-full w-full translate-y-full bg-[var(--lb-bleu)] transition-transform duration-500 ease-out group-hover:translate-y-0" />
-            <span className="relative z-10 flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.25em] text-[var(--lb-bleu)] transition-colors duration-500 group-hover:text-[var(--lb-white)] md:gap-3 md:text-[10px]">
+            <span className="flex items-center justify-center gap-3">
               Discover Us on Marketplace
             </span>
-          </a>
+          </LuxuryButton>
         </div>
       </div>
 
@@ -135,10 +134,10 @@ function ProductCard({ product }: { product: Product }) {
             </span>
           )}
 
-          {/* Images */}
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.4 }}
             className="absolute inset-0"
           >
@@ -156,7 +155,6 @@ function ProductCard({ product }: { product: Product }) {
             />
           </motion.div>
 
-          {/* Quick Action */}
           <div className="absolute bottom-4 right-4 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
             <div className="hover:bg-[var(--lb-bleu)]/90 rounded-full bg-[var(--lb-bleu)] p-2.5 text-white shadow-md">
               <IconShoppingBag size={16} stroke={1.5} />
@@ -164,7 +162,6 @@ function ProductCard({ product }: { product: Product }) {
           </div>
         </div>
 
-        {/* Text */}
         <div className="mt-auto space-y-1 px-1 text-center md:text-left">
           <h3 className="group-hover:text-[var(--lb-bleu)]/80 text-[12px] font-bold uppercase tracking-[0.2em] text-[var(--lb-bleu)]">
             {product.name}

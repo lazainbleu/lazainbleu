@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import LuxuryButton from '@/components/ui/LuxuryButton'
 
 const ShippingReturns = () => {
   const steps = [
@@ -36,7 +37,7 @@ const ShippingReturns = () => {
           </p>
         </header>
 
-        {/* Steps Grid: Professional Minimalist */}
+        {/* Steps Grid */}
         <div className="mb-24 grid gap-8 md:grid-cols-3">
           {steps.map((step, i) => (
             <div
@@ -67,12 +68,9 @@ const ShippingReturns = () => {
               returns only for unopened seals or items received in a compromised
               condition. Every request is handled with personal care by our team.
             </p>
-            <a
-              href="/contact"
-              className="inline-block border border-[var(--lb-bleu)] px-10 py-4 text-[10px] font-medium uppercase tracking-[0.3em] transition-all duration-500 hover:bg-[var(--lb-bleu)] hover:text-[var(--lb-white)]"
-            >
-              Speak with Our Concierge
-            </a>
+
+            {/* PEMANGGILAN BUTTON DISINI */}
+            <LuxuryButton href="/contact">Speak with Our Concierge</LuxuryButton>
           </div>
         </div>
 

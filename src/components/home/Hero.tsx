@@ -3,13 +3,9 @@
 import React from 'react'
 import { motion, Variants } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import ShinyText from '@/components/ui/ShinyText'
 
 const Hero = () => {
-  // Gunakan string cubic-bezier agar TypeScript tidak komplain
-  // Ini identik dengan efek "Snappy Luxury" yang kita inginkan
-  const luxuryEase = 'easeOut' // Alternatif paling aman
-  const customBezier = [0.16, 1, 0.3, 1] as const // Memaksa TS mengenali sebagai tuple
-
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -29,13 +25,11 @@ const Hero = () => {
       filter: 'blur(0px)',
       transition: {
         duration: 0.8,
-        // @ts-ignore - Jika masih error, ini adalah cara paling pragmatis untuk luxury easing
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.16, 1, 0.3, 1], // Luxury ease
       },
     },
   }
 
-  // Khusus untuk line agar tidak error, kita gunakan ease standar yang elegan
   const lineVariants: Variants = {
     hidden: { scaleX: 0, opacity: 0 },
     visible: {
@@ -75,9 +69,27 @@ const Hero = () => {
         <div className="flex flex-col items-center">
           <motion.h1
             variants={itemVariants}
-            className="ml-[0.35em] text-[11vw] font-extralight leading-none tracking-[0.35em] text-white/95 md:text-[6vw] lg:text-[72px]"
+            className="ml-[0.35em] text-[11vw] font-extralight leading-none tracking-[0.35em] md:text-[6vw] lg:text-[72px]"
           >
-            LAZAIN <span className="font-normal text-blue-100/70">BLEU</span>
+            {/* LAZAIN - White Base, Bright Shine */}
+            <ShinyText
+              text="LAZAIN"
+              speed={4}
+              baseColor="rgba(255, 255, 255, 0.85)"
+              shineColor="#ffffff"
+              className="font-extralight"
+            />
+
+            <span className="inline-block w-[0.25em]" />
+
+            {/* BLEU - Soft Blue Base, White Shine */}
+            <ShinyText
+              text="BLEU"
+              speed={4}
+              baseColor="rgba(191, 219, 254, 0.6)" // Blue-200 with opacity
+              shineColor="#ffffff"
+              className="font-normal"
+            />
           </motion.h1>
 
           <motion.div
@@ -96,19 +108,23 @@ const Hero = () => {
         {/* --- LUXURY GLASS BUTTON --- */}
         <motion.div variants={itemVariants} className="mt-20">
           <a
-            href="/explore"
+            href="/shop"
             className={cn(
               'group relative flex items-center justify-center overflow-hidden px-16 py-4',
               'border border-white/10 bg-white/[0.02] backdrop-blur-md',
               'transition-all duration-500 ease-out hover:border-white/25 hover:bg-white/[0.05]'
             )}
           >
-            {/* Glass Shine Effect */}
-            <div
-              className={cn(
-                'absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/[0.1] to-transparent',
-                'transition-transform duration-[1000ms] ease-in-out group-hover:translate-x-[150%]'
-              )}
+            {/* Glass Shine Effect on Button (Synced loop) */}
+            <motion.div
+              animate={{ x: ['-100%', '200%'] }}
+              transition={{
+                repeat: Infinity,
+                duration: 3,
+                ease: 'linear',
+                repeatDelay: 1,
+              }}
+              className="absolute inset-0 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent"
             />
 
             <span className="relative z-10 text-[9px] font-medium uppercase tracking-[0.9em] text-zinc-400 transition-all duration-500 group-hover:text-white">

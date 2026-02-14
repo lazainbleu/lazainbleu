@@ -1,10 +1,9 @@
 'use client'
 
-import React from 'react'
 import { motion, Variants } from 'framer-motion'
 import { IconArrowRight } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
+import LuxuryButton from '@/components/ui/LuxuryButton'
 
 interface CollectionCardProps {
   title: string
@@ -163,15 +162,11 @@ export default function CollectionsGrid() {
           </div>
         </div>
 
-        {/* Button - Statis tanpa animasi muncul, hanya hover & active */}
+        {/* Updated Button with LuxuryButton Component */}
         <div className="mt-16 text-center">
-          <Link href="/discovery">
-            <button className="group relative overflow-hidden border border-[var(--lb-bleu)] px-12 py-4 text-[var(--lb-bleu)] transition-all duration-200 hover:bg-[var(--lb-bleu)] hover:text-white active:scale-95">
-              <span className="relative z-10 text-[10px] font-bold uppercase tracking-[0.3em]">
-                View Discovery Set
-              </span>
-            </button>
-          </Link>
+          <LuxuryButton href="/discovery" className="px-12">
+            View Discovery Set
+          </LuxuryButton>
         </div>
       </motion.div>
     </section>
