@@ -21,7 +21,6 @@ export default function BrandCinematic({
       vid.muted = true
       vid.defaultMuted = true
 
-      // Paksa autoplay
       const playAttempt = () => {
         vid.play().catch(() => {
           setTimeout(playAttempt, 200)
@@ -34,7 +33,7 @@ export default function BrandCinematic({
   return (
     <section
       className={cn(
-        'relative aspect-[21/9] w-full overflow-hidden bg-black',
+        'relative aspect-[16/9] w-full overflow-hidden bg-black',
         'mt-0 pt-0',
         className
       )}
