@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 import type { Metadata, Viewport } from 'next'
 import { RootLayoutClient } from '@/components/layout/RootLayoutClient'
+// import Splash from '@/components/ui/splash'
 
 // Font setup
 const inter = Inter({
@@ -114,6 +115,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className={`${inter.variable} bg-[var(--lb-white)] text-[var(--lb-bleu)] antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          {/* <Splash /> */}
           <RootLayoutClient>{children}</RootLayoutClient>
         </ThemeProvider>
       </body>

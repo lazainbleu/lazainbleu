@@ -8,15 +8,17 @@ import { clsx } from 'clsx'
 import { NAVIGATION_ITEMS } from '@/constants/navigation'
 import { useScroll } from '@/hooks/use-scroll'
 import { useSupabaseSession } from '@/hooks/use-supabase-session'
+import { useCartStore } from '@/store/cartStore'
 import { MobileMenu } from './MobileMenu'
 import CartSlider from '@/components/cart/CartSlider'
+import SearchModal from '@/components/product/SearchModal'
 
 export default function Header() {
   const isScrolled = useScroll(10)
   const { user, isLoading } = useSupabaseSession()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'unset'
@@ -60,6 +62,7 @@ export default function Header() {
           <div className="flex w-1/4 items-center justify-end gap-3 lg:w-1/3">
             <DesktopNav items={NAVIGATION_ITEMS.slice(2)} className="mr-4" />
             <ActionIcons
+              onOpenSearch={() => setIsSearchOpen(true)}
               onOpenCart={() => setIsCartOpen(true)}
               user={user}
               isLoading={isLoading}
@@ -70,6 +73,9 @@ export default function Header() {
 
       {/* MOBILE MENU */}
       <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+
+      {/* SEARCH MODAL */}
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
       {/* CART SLIDER (FIX) */}
       <CartSlider isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
@@ -139,26 +145,39 @@ function DesktopNav({ items, showGlobe, className }: any) {
 }
 
 function ActionIcons({
+  onOpenSearch,
   onOpenCart,
   user,
   isLoading,
 }: {
+  onOpenSearch: () => void
   onOpenCart: () => void
   user: SupabaseUser | null
   isLoading: boolean
 }) {
+  const { totalItems } = useCartStore()
+  const [isMounted, setIsMounted] = useState(false)
   const accountHref = user ? '/profile' : '/login'
   const accountLabel = user ? 'Profile' : 'Login'
 
+  // Prevent hydration mismatch - only render cart count on client
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   return (
     <div className="flex items-center gap-1.5 md:gap-4">
-      <button className="p-1 hover:opacity-50" aria-label="Search">
+      <button
+        className="p-1 transition-opacity hover:opacity-50"
+        aria-label="Search"
+        onClick={onOpenSearch}
+      >
         <Search className="h-5 w-5 stroke-[1.1px]" />
       </button>
 
       <Link
         href={accountHref}
-        className="hidden items-center gap-2 p-1 hover:opacity-50 md:flex"
+        className="hidden items-center gap-2 p-1 transition-opacity hover:opacity-50 md:flex"
         aria-label={accountLabel}
       >
         <User className="h-5 w-5 stroke-[1.1px]" />
@@ -174,14 +193,14 @@ function ActionIcons({
       </Link>
 
       <button
-        className="relative p-1 hover:opacity-50"
+        className="relative p-1 transition-opacity hover:opacity-50"
         aria-label="Cart"
         onClick={onOpenCart}
       >
         <ShoppingCart className="h-5 w-5 stroke-[1.1px]" />
 
         <span className="absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#0A192F] text-[7px] font-bold text-white">
-          0
+          {isMounted ? totalItems() : '0'}
         </span>
       </button>
     </div>

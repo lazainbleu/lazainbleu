@@ -103,19 +103,6 @@ export default function FeaturedProducts() {
             <span className="absolute inset-0 h-full w-full translate-y-full bg-[var(--lb-bleu)] transition-transform duration-500 ease-out group-hover:translate-y-0" />
             <span className="relative z-10 flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.25em] text-[var(--lb-bleu)] transition-colors duration-500 group-hover:text-[var(--lb-white)] md:gap-3 md:text-[10px]">
               Discover Us on Marketplace
-              <svg
-                className="h-3 w-3 transition-transform duration-500 group-hover:translate-x-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
             </span>
           </a>
         </div>

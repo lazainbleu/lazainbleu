@@ -14,8 +14,8 @@ const BRAND = {
     role: 'Founder & CEO',
     image: '/images/owner.png',
   },
-  tagline: 'Crafted for those who move in silence.',
-  philosophy: 'Luxury is a silent signature of power and elegance.',
+  tagline: 'Created for those who value quiet confidence',
+  philosophy: 'Scent is the quiet expression of character',
   history:
     'Lazain Bleu is a luxury fragrance house founded in 2025, blending French artistry with Andalusian and Islamic heritage. Guided by the philosophy “Luxury, Inspired by Faith and Heritage”, each creation is an olfactory journey that honors tradition while embracing contemporary elegance.',
 }

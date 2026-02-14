@@ -1,13 +1,22 @@
-import { useState, useEffect } from 'react';
+'use client'
+import { useEffect, useState } from 'react'
 
-export function useScroll(threshold = 20) {
-    const [isScrolled, setIsScrolled] = useState(false);
+export function useScroll(offset = 10) {
+  const [scrolled, setScrolled] = useState(false)
 
-    useEffect(() => {
-        const handleScroll = () => setIsScrolled(window.scrollY > threshold);
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [threshold]);
+  useEffect(() => {
+    let lastY = 0
+    const handle = () => {
+      const y = window.scrollY
+      if (Math.abs(y - lastY) > 2) {
+        setScrolled(y > offset)
+        lastY = y
+      }
+    }
 
-    return isScrolled;
+    window.addEventListener('scroll', handle, { passive: true })
+    return () => window.removeEventListener('scroll', handle)
+  }, [offset])
+
+  return scrolled
 }
