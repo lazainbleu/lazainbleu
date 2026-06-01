@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Loader2, LogOut } from 'lucide-react'
@@ -21,15 +21,33 @@ const formatDate = (value?: Date | string | null) => {
 
 export default function ProfilePage() {
   const router = useRouter()
-  const { data: session, isPending } = authClient.useSession()
-  const user = session?.user ?? null
+  const [mounted, setMounted] = useState(false)
   const [isSigningOut, setIsSigningOut] = useState(false)
   const provider = 'magic-link'
+
+  // Amankan pemanggilan session di tingkat atas fungsi komponen
+  const { data: session, isPending } = authClient.useSession()
+  const user = session?.user ?? null
+
+  // Pastikan komponen dieksekusi hanya ketika sudah berada di browser (client-side)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleSignOut = async () => {
     setIsSigningOut(true)
     await authClient.signOut()
     router.replace('/login')
+  }
+
+  // Jika proses build Vercel (pre-rendering) sedang berjalan di server, kembalikan skeleton loading
+  if (!mounted) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f5f4f2] text-sm text-neutral-500">
+        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+        <span>Loading account settings...</span>
+      </div>
+    )
   }
 
   return (
