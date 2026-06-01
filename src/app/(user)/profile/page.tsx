@@ -7,6 +7,8 @@ import { Loader2, LogOut } from 'lucide-react'
 import { clsx } from 'clsx'
 import { authClient } from '@/lib/auth-client'
 
+export const dynamic = 'force-dynamic'
+
 const formatDate = (value?: Date | string | null) => {
   if (!value) return '-'
   const date = new Date(value)
