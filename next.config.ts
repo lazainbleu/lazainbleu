@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  serverExternalPackages: ['better-auth'],
 }
 
 export default nextConfig

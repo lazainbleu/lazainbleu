@@ -3,11 +3,10 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Search, User, ShoppingCart, Menu, Globe } from 'lucide-react'
-import type { User as SupabaseUser } from '@supabase/supabase-js'
 import { clsx } from 'clsx'
 import { NAVIGATION_ITEMS } from '@/constants/navigation'
 import { useScroll } from '@/hooks/use-scroll'
-import { useSupabaseSession } from '@/hooks/use-supabase-session'
+import { authClient } from '@/lib/auth-client'
 import { useCartStore } from '@/store/cartStore'
 import { MobileMenu } from './MobileMenu'
 import CartSlider from '@/components/cart/CartSlider'
@@ -15,21 +14,29 @@ import SearchModal from '@/components/product/SearchModal'
 
 export default function Header() {
   const isScrolled = useScroll(10)
-  const { user, isLoading } = useSupabaseSession()
+  const { data: session, isPending } = authClient.useSession()
+  const [hasMounted, setHasMounted] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   useEffect(() => {
+    setHasMounted(true)
+  }, [])
+
+  useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'unset'
   }, [isMobileMenuOpen])
+
+  const user = hasMounted ? (session?.user ?? null) : null
+  const isSessionLoading = !hasMounted || isPending
 
   const transitionClass = 'transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]'
 
   return (
     <header
       className={clsx(
-        'fixed left-0 right-0 top-0 z-50 bg-[var(--lb-white)]',
+        'fixed top-0 right-0 left-0 z-50 bg-(--lb-white)',
         transitionClass,
         isScrolled ? 'shadow-sm' : 'pt-2 md:pt-4'
       )}
@@ -39,7 +46,7 @@ export default function Header() {
           'w-full border-b',
           transitionClass,
           isScrolled
-            ? 'border-neutral-100 bg-[var(--lb-white)] py-2 backdrop-blur-md'
+            ? 'border-neutral-100 bg-(--lb-white) py-2 backdrop-blur-md'
             : 'border-transparent py-3 md:py-5'
         )}
       >
@@ -65,7 +72,7 @@ export default function Header() {
               onOpenSearch={() => setIsSearchOpen(true)}
               onOpenCart={() => setIsCartOpen(true)}
               user={user}
-              isLoading={isLoading}
+              isLoading={isSessionLoading}
             />
           </div>
         </div>
@@ -89,7 +96,7 @@ function Logo({ isScrolled, transitionClass }: any) {
       <Link href="/" className="group block">
         <h1
           className={clsx(
-            'font-light uppercase leading-none tracking-[0.3em] md:tracking-[0.5em]',
+            'leading-none font-light tracking-[0.3em] uppercase md:tracking-[0.5em]',
             transitionClass,
             isScrolled ? 'text-sm md:text-base' : 'text-lg md:text-2xl'
           )}
@@ -104,7 +111,7 @@ function Logo({ isScrolled, transitionClass }: any) {
             isScrolled ? 'mt-0 max-h-0 opacity-0' : 'mt-2 max-h-10 opacity-100'
           )}
         >
-          <p className="whitespace-nowrap text-[7px] uppercase tracking-[0.4em] text-neutral-400 md:text-[8px] md:tracking-[0.6em]">
+          <p className="text-[7px] tracking-[0.4em] whitespace-nowrap text-neutral-400 uppercase md:text-[8px] md:tracking-[0.6em]">
             Parfumerie d'Excellence
           </p>
         </div>
@@ -117,7 +124,7 @@ function DesktopNav({ items, showGlobe, className }: any) {
   return (
     <nav
       className={clsx(
-        'hidden items-center gap-8 text-[11px] uppercase tracking-[0.15em] lg:flex',
+        'hidden items-center gap-8 text-[11px] tracking-[0.15em] uppercase lg:flex',
         className
       )}
     >
@@ -152,7 +159,7 @@ function ActionIcons({
 }: {
   onOpenSearch: () => void
   onOpenCart: () => void
-  user: SupabaseUser | null
+  user: { id: string } | null
   isLoading: boolean
 }) {
   const { totalItems } = useCartStore()
@@ -199,7 +206,7 @@ function ActionIcons({
       >
         <ShoppingCart className="h-5 w-5 stroke-[1.1px]" />
 
-        <span className="absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#0A192F] text-[7px] font-bold text-white">
+        <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#0A192F] text-[7px] font-bold text-white">
           {isMounted ? totalItems() : '0'}
         </span>
       </button>

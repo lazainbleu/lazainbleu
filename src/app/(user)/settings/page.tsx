@@ -35,7 +35,7 @@ const SETTINGS_MENU: SettingItem[] = [
 export default function SettingsPage() {
   return (
     /* Padding disesuaikan ke pt-12 (mobile) dan pt-16 (desktop) agar sejajar dengan halaman sub-settings */
-    <div className="min-h-screen bg-[var(--lb-white)] px-4 pb-20 pt-12 transition-all duration-300 md:pt-16">
+    <div className="min-h-screen bg-[var(--lb-white)] px-4 pt-12 pb-20 transition-all duration-300 md:pt-16">
       <div className="container-lb mx-auto max-w-[760px]">
         {/* Header Section */}
         <header className="animate-in fade-in slide-in-from-top-4 mb-12 duration-700">
@@ -43,11 +43,11 @@ export default function SettingsPage() {
             <div className="rounded-lg border border-[var(--lb-border)] bg-white p-2">
               <Settings2 size={16} strokeWidth={2} className="text-[var(--lb-bleu)]" />
             </div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[var(--lb-neutral)] sm:text-[11px]">
+            <span className="text-[10px] font-bold tracking-[0.4em] text-[var(--lb-neutral)] uppercase sm:text-[11px]">
               Account Control
             </span>
           </div>
-          <h1 className="text-3xl font-extralight leading-tight tracking-tight text-[var(--lb-bleu)] sm:text-5xl">
+          <h1 className="text-3xl leading-tight font-extralight tracking-tight text-[var(--lb-bleu)] sm:text-5xl">
             Settings <span className="font-semibold italic opacity-90">Management</span>
           </h1>
           <div className="mt-6 h-[1px] w-24 bg-[var(--lb-bleu)] opacity-10" />
@@ -89,7 +89,7 @@ export default function SettingsPage() {
                       >
                         {item.title}
                       </h2>
-                      <p className="mt-1 max-w-[280px] text-sm font-light leading-relaxed text-[var(--lb-neutral)] sm:max-w-none">
+                      <p className="mt-1 max-w-[280px] text-sm leading-relaxed font-light text-[var(--lb-neutral)] sm:max-w-none">
                         {item.description}
                       </p>
                     </div>
@@ -110,7 +110,7 @@ export default function SettingsPage() {
         {/* Brand Signifier */}
         <footer className="mt-24 flex flex-col items-center justify-between gap-6 border-t border-[var(--lb-border)] pt-8 sm:flex-row">
           <div className="flex items-center gap-3">
-            <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[var(--lb-bleu)] opacity-40">
+            <span className="text-[9px] font-black tracking-[0.5em] text-[var(--lb-bleu)] uppercase opacity-40">
               End-to-End Encryption
             </span>
           </div>

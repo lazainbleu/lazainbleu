@@ -12,7 +12,7 @@ export default function DeleteAccountPage() {
 
   return (
     /* Padding disamakan dengan Password Page: pt-12 md:pt-16 */
-    <div className="bg-[var(--lb-white)] px-4 pb-20 pt-12 transition-all duration-300 md:pt-16">
+    <div className="bg-[var(--lb-white)] px-4 pt-12 pb-20 transition-all duration-300 md:pt-16">
       <div className="container-lb mx-auto max-w-xl">
         {/* Navigation - mb-4 agar rapat ke judul seperti Password Page */}
         <div className="mb-4">
@@ -24,7 +24,7 @@ export default function DeleteAccountPage() {
               size={14}
               className="transition-transform group-hover:-translate-x-1"
             />
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase">
               Back to Settings
             </span>
           </Link>
@@ -32,9 +32,9 @@ export default function DeleteAccountPage() {
 
         {/* Header Section - Menggunakan struktur yang sama dengan Password Page */}
         <header className="mb-6">
-          <h1 className="text-3xl font-extralight leading-tight tracking-tight text-[var(--lb-bleu)] md:text-4xl">
+          <h1 className="text-3xl leading-tight font-extralight tracking-tight text-[var(--lb-bleu)] md:text-4xl">
             Account{' '}
-            <span className="font-semibold italic text-red-600 opacity-90">
+            <span className="font-semibold text-red-600 italic opacity-90">
               Termination
             </span>
           </h1>
@@ -53,7 +53,7 @@ export default function DeleteAccountPage() {
               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50">
                 <AlertTriangle className="h-8 w-8 text-red-500" />
               </div>
-              <p className="text-xs font-medium uppercase tracking-widest text-red-500">
+              <p className="text-xs font-medium tracking-widest text-red-500 uppercase">
                 Danger Zone
               </p>
             </div>
@@ -61,7 +61,7 @@ export default function DeleteAccountPage() {
             {/* Form Section */}
             <div className="space-y-8">
               <div className="space-y-3">
-                <label className="mb-1 ml-1 block text-center text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--lb-neutral)] opacity-70">
+                <label className="mb-1 ml-1 block text-center text-[9px] font-bold tracking-[0.2em] text-[var(--lb-neutral)] uppercase opacity-70">
                   Type "DELETE" to proceed
                 </label>
                 <input
@@ -69,7 +69,7 @@ export default function DeleteAccountPage() {
                   placeholder="Konfirmasi penghapusan"
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}
-                  className="w-full border-b border-[var(--lb-border)] bg-transparent px-1 py-2 text-center font-medium tracking-wider text-[var(--lb-bleu)] outline-none transition-all duration-300 placeholder:text-slate-200 focus:border-red-400"
+                  className="w-full border-b border-[var(--lb-border)] bg-transparent px-1 py-2 text-center font-medium tracking-wider text-[var(--lb-bleu)] transition-all duration-300 outline-none placeholder:text-slate-200 focus:border-red-400"
                 />
               </div>
 
@@ -81,7 +81,7 @@ export default function DeleteAccountPage() {
                     setLoading(true)
                     // Integrasi Supabase Anda di sini
                   }}
-                  className={`flex w-full items-center justify-center gap-3 rounded-xl py-4 text-[10px] font-medium uppercase tracking-widest transition-all duration-500 ${
+                  className={`flex w-full items-center justify-center gap-3 rounded-xl py-4 text-[10px] font-medium tracking-widest uppercase transition-all duration-500 ${
                     ready
                       ? 'bg-red-600 text-white hover:shadow-[0_10px_25px_rgba(220,38,38,0.15)] active:scale-[0.98]'
                       : 'cursor-not-allowed border border-slate-100 bg-slate-50 text-slate-300'
@@ -97,7 +97,7 @@ export default function DeleteAccountPage() {
                   )}
                 </button>
 
-                <p className="text-center text-[10px] font-medium italic text-[var(--lb-neutral)] opacity-40">
+                <p className="text-center text-[10px] font-medium text-[var(--lb-neutral)] italic opacity-40">
                   Tindakan ini tidak dapat dibatalkan.
                 </p>
               </div>
@@ -108,7 +108,7 @@ export default function DeleteAccountPage() {
         {/* Footer Note */}
         <div className="mt-8 flex items-center justify-center gap-3 opacity-20">
           <div className="h-[1px] w-8 bg-[var(--lb-bleu)]" />
-          <p className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.3em] text-[var(--lb-bleu)]">
+          <p className="text-[9px] font-bold tracking-[0.3em] whitespace-nowrap text-[var(--lb-bleu)] uppercase">
             Secure Protocol
           </p>
           <div className="h-[1px] w-8 bg-[var(--lb-bleu)]" />

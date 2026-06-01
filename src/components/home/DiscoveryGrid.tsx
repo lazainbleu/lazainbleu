@@ -49,7 +49,7 @@ const CollectionCard = ({
     <motion.div
       variants={itemVariants}
       className={cn(
-        'group relative cursor-pointer overflow-hidden rounded-xl border border-[var(--lb-border)] transition-all duration-500',
+        'group relative cursor-pointer overflow-hidden rounded-xl border border-(--lb-border) transition-all duration-500',
         className
       )}
     >
@@ -61,7 +61,7 @@ const CollectionCard = ({
           loading="lazy"
         />
       </div>
-      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="absolute inset-0 z-10 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       <div className="absolute inset-0 z-20 flex flex-col items-start justify-end p-6 sm:p-8">
         <div className="w-full transform transition-transform duration-500 group-hover:-translate-y-1">
           <h3
@@ -74,10 +74,10 @@ const CollectionCard = ({
           >
             {title}
           </h3>
-          <p className="mb-4 line-clamp-2 max-w-[85%] text-[11px] font-light leading-relaxed text-white/80 sm:text-[12px]">
+          <p className="mb-4 line-clamp-2 max-w-[85%] text-[11px] leading-relaxed font-light text-white/80 sm:text-[12px]">
             {subtitle}
           </p>
-          <div className="flex translate-y-2 items-center gap-2 text-[9px] font-bold uppercase tracking-[0.3em] text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+          <div className="flex translate-y-2 items-center gap-2 text-[9px] font-bold tracking-[0.3em] text-white uppercase opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
             <span className="border-b border-white/40 pb-0.5">Explore</span>
             <IconArrowRight size={12} />
           </div>
@@ -89,7 +89,7 @@ const CollectionCard = ({
 
 export default function CollectionsGrid() {
   return (
-    <section className="overflow-hidden bg-[var(--lb-white)] px-4 py-16 selection:bg-[var(--lb-bleu)] selection:text-white sm:px-6 sm:py-24">
+    <section className="overflow-hidden bg-(--lb-white) px-4 py-16 selection:bg-(--lb-bleu) selection:text-white sm:px-6 sm:py-24">
       <motion.div
         className="mx-auto max-w-[1320px]"
         initial="hidden"
@@ -101,24 +101,23 @@ export default function CollectionsGrid() {
         <div className="mb-12 text-center sm:mb-16">
           <motion.span
             variants={itemVariants}
-            className="mb-2 block text-[9px] font-bold uppercase tracking-[0.5em] text-[var(--lb-neutral)]"
+            className="mb-2 block text-[9px] font-bold tracking-[0.5em] text-(--lb-neutral) uppercase"
           >
             The Art of Scent
           </motion.span>
           <motion.h2
             variants={itemVariants}
-            className="mb-4 font-serif text-3xl tracking-tight text-[var(--lb-bleu)] sm:text-4xl md:text-5xl"
+            className="mb-4 font-serif text-3xl tracking-tight text-(--lb-bleu) sm:text-4xl md:text-5xl"
           >
-            Our{' '}
-            <span className="font-light italic text-[var(--lb-bleu)]">Discovery Set</span>
+            Our <span className="font-light text-(--lb-bleu) italic">Discovery Set</span>
           </motion.h2>
           <motion.div
             variants={itemVariants}
-            className="bg-[var(--lb-bleu)]/10 mx-auto mb-6 h-[1px] w-12"
+            className="mx-auto mb-6 h-px w-12 bg-(--lb-bleu)/10"
           />
           <motion.p
             variants={itemVariants}
-            className="mx-auto max-w-xl px-4 text-sm font-light leading-relaxed text-[var(--lb-neutral)] opacity-80 md:text-base"
+            className="mx-auto max-w-xl px-4 text-sm leading-relaxed font-light text-(--lb-neutral) opacity-80 md:text-base"
           >
             Experience the complete olfactory journey with our curated sets, designed for
             those who seek to explore every note.

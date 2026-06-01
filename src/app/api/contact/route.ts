@@ -1,5 +1,6 @@
 // src/app/api/contact/route.ts
 import { NextResponse } from 'next/server'
+import { Resend } from 'resend'
 import { z } from 'zod'
 
 const BodySchema = z.object({
@@ -127,14 +128,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
     }
 
-    // required envs (Gmail settings)
+    // required envs (Resend + receiver)
     const RECEIVER = process.env.CONTACT_RECEIVER_EMAIL
-    const SMTP_USER = process.env.GMAIL_SMTP_USER
-    const SMTP_PASS = process.env.GMAIL_SMTP_PASS // app password
-    if (!RECEIVER || !SMTP_USER || !SMTP_PASS) {
+    const RESEND_API_KEY = process.env.RESEND_API_KEY
+    if (!RECEIVER || !RESEND_API_KEY) {
       console.error('Missing email envs')
       return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
     }
+
+    // Lazain Bleu: use the official Resend sender for now.
+    // NOTE: Replace with your verified custom domain sender in production.
+    const FROM = 'Lazain Bleu <onboarding@resend.dev>'
+
+    const resend = new Resend(RESEND_API_KEY)
 
     // build email content
     const subject = `[Lazain Bleu] Contact from ${body.name}`
@@ -144,24 +150,20 @@ export async function POST(req: Request) {
 <hr/>
 <p>${escapeHtml(body.message).replace(/\n/g, '<br/>')}</p>`
 
-    // send via nodemailer (Gmail SMTP using App Password)
-    const nodemailer = await import('nodemailer')
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: SMTP_USER,
-        pass: SMTP_PASS,
-      },
-    })
-
-    await transporter.sendMail({
-      from: `Lazain Bleu <${SMTP_USER}>`,
+    // send via Resend
+    const { error } = await resend.emails.send({
+      from: FROM,
       replyTo: body.email,
       to: RECEIVER,
       subject,
       text,
       html,
     })
+
+    if (error) {
+      console.error('Resend contact email error:', error)
+      return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+    }
 
     return NextResponse.json({ ok: true })
   } catch (err: any) {

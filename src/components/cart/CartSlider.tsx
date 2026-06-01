@@ -25,26 +25,26 @@ export default function CartSlider({
 
           {/* SLIDER PANEL */}
           <motion.div
-            className="fixed right-0 top-0 z-50 h-full w-[85%] max-w-[420px] bg-[var(--lb-white)] shadow-xl"
+            className="fixed top-0 right-0 z-50 h-full w-[85%] max-w-[420px] bg-(--lb-white) shadow-xl"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           >
             {/* HEADER */}
-            <div className="flex items-center justify-between border-b border-[var(--lb-border)] p-4">
-              <h2 className="text-lg font-semibold tracking-tight text-[var(--lb-bleu)]">
+            <div className="flex items-center justify-between border-b border-(--lb-border) p-4">
+              <h2 className="text-lg font-semibold tracking-tight text-(--lb-bleu)">
                 Your Cart
               </h2>
 
-              <button onClick={onClose} className="text-[var(--lb-bleu)]">
+              <button onClick={onClose} className="text-(--lb-bleu)">
                 <X className="h-5 w-5" />
               </button>
             </div>
 
             {/* CONTENT */}
             <div className="p-4">
-              <p className="text-sm text-[var(--lb-neutral)]">Cart is empty.</p>
+              <p className="text-sm text-(--lb-neutral)">Cart is empty.</p>
             </div>
           </motion.div>
         </>

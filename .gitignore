@@ -27,14 +27,10 @@ build/
 .cache/
 
 # ==========================
-# Prisma
+# Drizzle
 # ==========================
-# Client is generated in node_modules, so this is fine.
-prisma/*-journal
-prisma/dev.db
-prisma/dev.db-journal
-# Migrations: optional — keep if you want versioning
-# prisma/migrations/
+drizzle/*.sqlite
+drizzle/*.sqlite-journal
 
 # ==========================
 # Env Files (VERY IMPORTANT)

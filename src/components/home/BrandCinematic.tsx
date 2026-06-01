@@ -33,7 +33,7 @@ export default function BrandCinematic({
   return (
     <section
       className={cn(
-        'relative aspect-[16/9] w-full overflow-hidden bg-black',
+        'relative aspect-video w-full overflow-hidden bg-black',
         'mt-0 pt-0',
         className
       )}
@@ -52,7 +52,7 @@ export default function BrandCinematic({
       />
 
       <div className="pointer-events-none absolute inset-0 bg-black/10" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-black/10" />
     </section>
   )
 }

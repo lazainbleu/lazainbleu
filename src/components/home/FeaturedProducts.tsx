@@ -76,8 +76,8 @@ export default function FeaturedProducts() {
           <h2 className="font-serif text-3xl tracking-tight text-[var(--lb-bleu)] md:text-4xl">
             Effortless Elegance in Every Scent
           </h2>
-          <div className="bg-[var(--lb-bleu)]/20 mx-auto my-4 h-[1px] w-12" />
-          <p className="mx-auto max-w-2xl text-xs font-light leading-relaxed tracking-wide text-[var(--lb-neutral)] md:text-sm">
+          <div className="mx-auto my-4 h-[1px] w-12 bg-[var(--lb-bleu)]/20" />
+          <p className="mx-auto max-w-2xl text-xs leading-relaxed font-light tracking-wide text-[var(--lb-neutral)] md:text-sm">
             Lazain Bleu blends Andalusian grace with Parisian craftsmanship.
             <br className="hidden md:block" />
             Each fragrance is a quiet testament to timeless refinement and contemporary
@@ -95,13 +95,13 @@ export default function FeaturedProducts() {
         {/* Marketplace Button - Updated with LuxuryButton */}
         <div className="mt-10 text-center md:mt-16">
           <LuxuryButton
-            href="https://shopee.co.id/lazainbleu"
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
             className="px-12"
           >
             <span className="flex items-center justify-center gap-3">
-              Discover Us on Marketplace
+              Limited Collection
             </span>
           </LuxuryButton>
         </div>
@@ -127,9 +127,9 @@ function ProductCard({ product }: { product: Product }) {
       className="group block min-w-[280px] flex-shrink-0 snap-center md:min-w-0"
     >
       <div className="flex h-full flex-col">
-        <div className="group-hover:border-[var(--lb-bleu)]/30 relative mb-4 aspect-[4/5] overflow-hidden border border-[var(--lb-border)] bg-[var(--lb-white)] transition-colors duration-300">
+        <div className="relative mb-4 aspect-[4/5] overflow-hidden border border-[var(--lb-border)] bg-[var(--lb-white)] transition-colors duration-300 group-hover:border-[var(--lb-bleu)]/30">
           {product.isNew && (
-            <span className="absolute left-3 top-3 z-20 bg-[var(--lb-bleu)] px-3 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--lb-white)]">
+            <span className="absolute top-3 left-3 z-20 bg-[var(--lb-bleu)] px-3 py-1 text-[9px] font-bold tracking-[0.2em] text-[var(--lb-white)] uppercase">
               New
             </span>
           )}
@@ -155,20 +155,20 @@ function ProductCard({ product }: { product: Product }) {
             />
           </motion.div>
 
-          <div className="absolute bottom-4 right-4 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-            <div className="hover:bg-[var(--lb-bleu)]/90 rounded-full bg-[var(--lb-bleu)] p-2.5 text-white shadow-md">
+          <div className="absolute right-4 bottom-4 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+            <div className="rounded-full bg-[var(--lb-bleu)] p-2.5 text-white shadow-md hover:bg-[var(--lb-bleu)]/90">
               <IconShoppingBag size={16} stroke={1.5} />
             </div>
           </div>
         </div>
 
         <div className="mt-auto space-y-1 px-1 text-center md:text-left">
-          <h3 className="group-hover:text-[var(--lb-bleu)]/80 text-[12px] font-bold uppercase tracking-[0.2em] text-[var(--lb-bleu)]">
+          <h3 className="text-[12px] font-bold tracking-[0.2em] text-[var(--lb-bleu)] uppercase group-hover:text-[var(--lb-bleu)]/80">
             {product.name}
           </h3>
           <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
             {product.type && (
-              <p className="text-[var(--lb-neutral)]/80 text-[9px] font-light uppercase tracking-widest">
+              <p className="text-[9px] font-light tracking-widest text-[var(--lb-neutral)]/80 uppercase">
                 {product.type}
               </p>
             )}

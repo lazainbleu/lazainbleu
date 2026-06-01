@@ -35,7 +35,7 @@ export default function Cart() {
         />
       </section>
 
-      <section className="w-full flex-shrink-0 md:w-[360px]">
+      <section className="w-full shrink-0 md:w-[360px]">
         <CartSummary
           items={cartItems}
           shippingCents={25000}

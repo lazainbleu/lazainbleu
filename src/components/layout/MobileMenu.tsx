@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation'
 import { X, User, Search, Globe } from 'lucide-react'
 import { clsx } from 'clsx'
 import { NAVIGATION_ITEMS } from '@/constants/navigation'
-import { supabase } from '@/lib/supabaseClient'
-import { useSupabaseSession } from '@/hooks/use-supabase-session'
+import { authClient } from '@/lib/auth-client'
 
 interface MobileMenuProps {
   isOpen: boolean
@@ -15,12 +14,13 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const router = useRouter()
-  const { user } = useSupabaseSession()
+  const { data: session } = authClient.useSession()
+  const user = session?.user ?? null
   const accountHref = user ? '/profile' : '/login'
   const accountLabel = user ? 'Profile' : 'Login'
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
+    await authClient.signOut()
     onClose()
     router.push('/login')
   }
@@ -30,7 +30,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       className={clsx(
         'fixed inset-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden',
         isOpen
-          ? 'z-[70] translate-x-0 opacity-100'
+          ? 'z-70 translate-x-0 opacity-100'
           : 'pointer-events-none z-[-1] -translate-x-full opacity-0'
       )}
       style={{
@@ -40,7 +40,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     >
       <div className="relative flex h-full flex-col p-6">
         {/* Close Button */}
-        <div className="relative z-[80] flex justify-end">
+        <div className="relative z-80 flex justify-end">
           <button
             onClick={onClose}
             className="-mr-2 touch-manipulation p-4 active:scale-90"
@@ -59,7 +59,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 href={item.href}
                 onClick={onClose}
                 className={clsx(
-                  'text-xl font-light uppercase tracking-[0.2em] transition-all duration-700',
+                  'text-xl font-light tracking-[0.2em] uppercase transition-all duration-700',
                   isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 )}
                 style={{
@@ -75,7 +75,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           {/* Action Icons */}
           <div
             className={clsx(
-              'relative z-[90] flex justify-center gap-10 transition-all delay-300 duration-1000',
+              'relative z-90 flex justify-center gap-10 transition-all delay-300 duration-1000',
               isOpen
                 ? 'pointer-events-auto translate-y-0 opacity-100'
                 : 'pointer-events-none translate-y-4 opacity-0'
@@ -117,7 +117,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           {/* Login / Logout */}
           <div
             className={clsx(
-              'mt-10 flex flex-col items-center gap-3 text-sm uppercase tracking-[0.2em] transition-all duration-700',
+              'mt-10 flex flex-col items-center gap-3 text-sm tracking-[0.2em] uppercase transition-all duration-700',
               isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
             )}
           >
