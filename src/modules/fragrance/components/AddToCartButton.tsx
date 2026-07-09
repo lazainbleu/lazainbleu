@@ -1,0 +1,155 @@
+'use client'
+
+import { useState } from 'react'
+import { IconShoppingCart, IconCheck, IconMinus, IconPlus } from '@tabler/icons-react'
+import { useCartStore } from '@/modules/cart'
+import type { Product } from '@/modules/fragrance'
+import { cn } from '@/lib/utils'
+
+type AddToCartButtonProps = {
+  product: Product
+  className?: string
+}
+
+export function AddToCartButton({ product, className }: AddToCartButtonProps) {
+  const [quantity, setQuantity] = useState(1)
+  const [isAdding, setIsAdding] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
+  const { addItem, items } = useCartStore()
+
+  const isOutOfStock = product.stock === 0
+  const cartItem = items.find((item) => item.id === product.id)
+  const currentInCart = cartItem?.quantity || 0
+  const availableStock = product.stock - currentInCart
+  const canAddMore = availableStock > 0
+
+  const handleQuantityChange = (delta: number) => {
+    setQuantity((prev) => {
+      const newQty = prev + delta
+      if (newQty < 1) return 1
+      if (newQty > availableStock) return availableStock
+      return newQty
+    })
+  }
+
+  const handleAddToCart = async () => {
+    if (isOutOfStock || !canAddMore || isAdding) return
+
+    setIsAdding(true)
+    await new Promise((resolve) => setTimeout(resolve, 300))
+
+    addItem({
+      id: product.id,
+      name: product.name,
+      slug: product.slug,
+      price: product.price,
+      quantity,
+      image: product.images[0],
+      stock: product.stock,
+    })
+
+    setShowSuccess(true)
+    setIsAdding(false)
+    setQuantity(1)
+    setTimeout(() => setShowSuccess(false), 2000)
+  }
+
+  /* === OUT OF STOCK === */
+  if (isOutOfStock) {
+    return (
+      <button
+        disabled
+        className={cn(
+          'flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl px-6 py-4 font-medium',
+          'bg-[var(--lb-border)] text-[var(--lb-neutral)]',
+          className
+        )}
+      >
+        Out of Stock
+      </button>
+    )
+  }
+
+  /* === MAX IN CART === */
+  if (!canAddMore) {
+    return (
+      <button
+        disabled
+        className={cn(
+          'flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl px-6 py-4 font-medium',
+          'bg-[var(--lb-border)] text-[var(--lb-neutral)]',
+          className
+        )}
+      >
+        Maximum quantity in cart
+      </button>
+    )
+  }
+
+  return (
+    <div className={cn('space-y-3', className)}>
+      {/* Quantity Selector */}
+      <div className="flex items-center justify-between rounded-xl border border-[var(--lb-border)] p-2">
+        <span className="pl-2 text-sm text-[var(--lb-neutral)]">Quantity</span>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => handleQuantityChange(-1)}
+            disabled={quantity <= 1}
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--lb-white)] transition-colors hover:bg-[rgba(0,0,0,0.05)] disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <IconMinus size={16} color="var(--lb-bleu)" />
+          </button>
+
+          <span className="w-8 text-center font-medium text-[var(--lb-bleu)]">
+            {quantity}
+          </span>
+
+          <button
+            onClick={() => handleQuantityChange(1)}
+            disabled={quantity >= availableStock}
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--lb-white)] transition-colors hover:bg-[rgba(0,0,0,0.05)] disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <IconPlus size={16} color="var(--lb-bleu)" />
+          </button>
+        </div>
+      </div>
+
+      {/* Add to Cart */}
+      <button
+        onClick={handleAddToCart}
+        disabled={isAdding}
+        className={cn(
+          'flex w-full items-center justify-center gap-2 rounded-xl px-6 py-4 font-medium transition-all duration-300',
+          showSuccess
+            ? 'bg-green-600 text-[var(--lb-white)]'
+            : 'bg-[var(--lb-bleu)] text-[var(--lb-white)] hover:opacity-90 active:scale-[0.98]',
+          isAdding && 'cursor-wait opacity-80'
+        )}
+      >
+        {isAdding ? (
+          <>
+            <div className="h-5 w-5 animate-spin rounded-full border-2 border-[var(--lb-white)] border-t-transparent" />
+            Adding...
+          </>
+        ) : showSuccess ? (
+          <>
+            <IconCheck size={20} />
+            Added to Cart
+          </>
+        ) : (
+          <>
+            <IconShoppingCart size={20} />
+            Add to Cart
+          </>
+        )}
+      </button>
+
+      {/* Stock Warning */}
+      {availableStock <= 5 && (
+        <p className="text-center text-sm text-amber-600">
+          Only {availableStock} available
+        </p>
+      )}
+    </div>
+  )
+}

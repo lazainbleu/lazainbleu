@@ -1,6 +1,7 @@
 <div align="center">
 
-# **Lazain Bleu — E-Commerce Front End** 🕯️💙  
+# **Lazain Bleu — E-Commerce Front End** 🕯️💙
+
 Luxury. Minimal. High-Performance.
 
 ![Next.js](https://img.shields.io/badge/Next.js-15.3.4-black?logo=next.js)
@@ -11,13 +12,15 @@ Luxury. Minimal. High-Performance.
 
 ---
 
-### A premium e-commerce front end built for **Lazain Bleu**,  
+### A premium e-commerce front end built for **Lazain Bleu**,
+
 designed with elegance, motion precision, and seamless product browsing.
 
 ---
 
-## 🌐 Live Preview  
-👉 lazainbleu.com *(example — update with your actual domain)*
+## 🌐 Live Preview
+
+👉 lazainbleu.com _(example — update with your actual domain)_
 
 ---
 
@@ -25,17 +28,18 @@ designed with elegance, motion precision, and seamless product browsing.
 
 ## 🧩 Tech Stack
 
-| Category        | Tools & Libraries                                                                 |
-|-----------------|------------------------------------------------------------------------------------|
-| Framework       | **Next.js** — App Router, Server Components, Static Rendering                     |
-| Language        | **TypeScript**                                                                    |
-| Styling         | **TailwindCSS** with custom tokens, design system, and utility layers             |
-| Animations      | **Framer Motion** — luxury motion, micro-interactions, smooth page transitions     |
-| Icons           | Lucide React · Tabler Icons                                                       |
-| Utilities       | `clsx`, `tailwind-merge`, `react-wrap-balancer`                                   |
-| SEO & Theme     | Next Themes · Next SEO · Next Sitemap                                             |
+| Category    | Tools & Libraries                                                              |
+| ----------- | ------------------------------------------------------------------------------ |
+| Framework   | **Next.js** — App Router, Server Components, Static Rendering                  |
+| Language    | **TypeScript**                                                                 |
+| Styling     | **TailwindCSS** with custom tokens, design system, and utility layers          |
+| Animations  | **Framer Motion** — luxury motion, micro-interactions, smooth page transitions |
+| Icons       | Lucide React · Tabler Icons                                                    |
+| Utilities   | `clsx`, `tailwind-merge`, `react-wrap-balancer`                                |
+| SEO & Theme | Next Themes · Next SEO · Next Sitemap                                          |
 
 **Development Stack**
+
 - Strict Linting: ESLint (`eslint-config-next`)
 - Post-processing: PostCSS + Autoprefixer
 - Optional Tailwind plugins for product grids & responsive layout
@@ -44,7 +48,7 @@ designed with elegance, motion precision, and seamless product browsing.
 
 ## ⚡ Quick Start
 
-```bash
+````bash
 # Clone the repository
 git clone https://github.com/zeiynz/lazainbleu.git
 cd lazainbleu
@@ -81,7 +85,7 @@ src
 │
 ├── app                          # Routing & composition ONLY — zero business logic
 │   │
-│   ├── (public)
+│   ├── (marketing)
 │   │   ├── page.tsx
 │   │   ├── fragrances
 │   │   ├── collections
@@ -91,7 +95,7 @@ src
 │   │   ├── about
 │   │   └── contact
 │   │
-│   ├── (account)
+│   ├── (customer)
 │   │   ├── profile
 │   │   ├── orders
 │   │   ├── wishlist
@@ -185,7 +189,7 @@ src
 │
 ├── middleware.ts                 # thin: auth/redirect checks ONLY, no business logic
 └── instrumentation.ts             # OpenTelemetry / observability hooks
-```
+````
 
 ---
 
@@ -235,15 +239,15 @@ A linear diagram (`app → modules → components → services → infrastructur
 
 **Enforced rules:**
 
-| # | Rule | Rationale |
-|---|---|---|
-| 1 | ✅ `app` may import `modules` | Composition root |
-| 2 | ✅ `modules` may import `components`, `services`, `infrastructure`, `libs`, `config` | Modules are the only cross-cutting consumer |
-| 3 | ✅ `modules/X` may import `modules/Y` **only via `Y/index.ts`** | Explicit public API, never internal files — see Module Contract |
-| 4 | ❌ `components` must NOT import `modules` | Keeps components domain-agnostic and reusable |
-| 5 | ❌ `infrastructure` must NOT import `app` | Infra has no knowledge of routing/UI |
-| 6 | ❌ `libs` must NOT depend on `modules` | Pure functions stay pure, zero circular risk |
-| 7 | ❌ `services` must NOT import `modules` | Cross-cutting concerns stay generic |
+| #   | Rule                                                                                 | Rationale                                                       |
+| --- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| 1   | ✅ `app` may import `modules`                                                        | Composition root                                                |
+| 2   | ✅ `modules` may import `components`, `services`, `infrastructure`, `libs`, `config` | Modules are the only cross-cutting consumer                     |
+| 3   | ✅ `modules/X` may import `modules/Y` **only via `Y/index.ts`**                      | Explicit public API, never internal files — see Module Contract |
+| 4   | ❌ `components` must NOT import `modules`                                            | Keeps components domain-agnostic and reusable                   |
+| 5   | ❌ `infrastructure` must NOT import `app`                                            | Infra has no knowledge of routing/UI                            |
+| 6   | ❌ `libs` must NOT depend on `modules`                                               | Pure functions stay pure, zero circular risk                    |
+| 7   | ❌ `services` must NOT import `modules`                                              | Cross-cutting concerns stay generic                             |
 
 These are not aspirational — see **Enforcement** below for the lint config that blocks violations at commit/CI time.
 
@@ -308,9 +312,10 @@ Layer 2 — app/(admin)/layout.tsx
 // middleware.ts — excerpt, business-logic-free as required by the rules above
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/admin')) {
-    const session = await getSession(request);          // infrastructure/auth
-    if (!session || !isStaffRole(session.user.role)) {  // modules/admin (role check helper)
-      return NextResponse.redirect(new URL('/login', request.url));
+    const session = await getSession(request) // infrastructure/auth
+    if (!session || !isStaffRole(session.user.role)) {
+      // modules/admin (role check helper)
+      return NextResponse.redirect(new URL('/login', request.url))
     }
   }
 }
@@ -335,7 +340,7 @@ The module doesn't know or care who's calling it — **authorization happens at 
 
 #### 4. Admin-specific module — what actually belongs in `modules/admin`
 
-`modules/admin` is intentionally thin. It does **not** contain product/order/customer logic — that stays in their own modules per the pattern above. It only owns concerns that are exclusively about *being an admin*:
+`modules/admin` is intentionally thin. It does **not** contain product/order/customer logic — that stays in their own modules per the pattern above. It only owns concerns that are exclusively about _being an admin_:
 
 ```txt
 modules/admin/
@@ -372,18 +377,16 @@ Every mutating admin action (price change, order status override, discount creat
 ```ts
 // modules/admin/services/audit-service.ts
 export async function logAdminAction(entry: {
-  adminId: string;
-  action: string;        // 'product.price_updated'
-  targetId: string;      // the fragrance/order/customer ID affected
-  before: unknown;
-  after: unknown;
+  adminId: string
+  action: string // 'product.price_updated'
+  targetId: string // the fragrance/order/customer ID affected
+  before: unknown
+  after: unknown
 }) {
   // writes to infrastructure/database — admin module is allowed to call infra directly,
   // same as any other module
 }
 ```
-
-
 
 ### `lib/` — The Most Commonly Misused Folder
 
@@ -433,17 +436,17 @@ src/lib/
 
 This is the direct fix for the files currently sitting in `src/lib/` in the project:
 
-| Current file | Why it's in the wrong place | Correct home |
-|---|---|---|
-| `auth.ts` | Wraps Better Auth server config — talks to sessions/cookies/DB | `infrastructure/auth/server.ts` |
-| `auth-client.ts` | Wraps Better Auth client SDK — browser-side auth state | `infrastructure/auth/client.ts` |
-| `cartData.ts` | Fetches/mutates cart — domain logic, not a pure function | `modules/cart/services/cart-service.ts` |
-| `products.ts` | Fetches product data from DB/API — domain logic | `modules/fragrance/services/fragrance-service.ts` |
-| `search.ts` | Cross-cutting but hits a search index/API — has a side effect | `services/search/search-client.ts` |
-| `validation.ts` | **Split it**: generic Zod shapes stay, domain-specific schemas move | Generic → `lib/validation/schemas/`; domain-specific (`checkoutSchema`, `cartItemSchema`) → inside their respective module's `types.ts` or a `schemas.ts` next to it |
-| `utils.ts` | Classic junk-drawer — usually 5+ unrelated functions with no shared theme | Split by category into `lib/format/`, `lib/string/`, `lib/array/`, `lib/number/` as shown above |
+| Current file     | Why it's in the wrong place                                               | Correct home                                                                                                                                                         |
+| ---------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth.ts`        | Wraps Better Auth server config — talks to sessions/cookies/DB            | `infrastructure/auth/server.ts`                                                                                                                                      |
+| `auth-client.ts` | Wraps Better Auth client SDK — browser-side auth state                    | `infrastructure/auth/client.ts`                                                                                                                                      |
+| `cartData.ts`    | Fetches/mutates cart — domain logic, not a pure function                  | `modules/cart/services/cart-service.ts`                                                                                                                              |
+| `products.ts`    | Fetches product data from DB/API — domain logic                           | `modules/fragrance/services/fragrance-service.ts`                                                                                                                    |
+| `search.ts`      | Cross-cutting but hits a search index/API — has a side effect             | `services/search/search-client.ts`                                                                                                                                   |
+| `validation.ts`  | **Split it**: generic Zod shapes stay, domain-specific schemas move       | Generic → `lib/validation/schemas/`; domain-specific (`checkoutSchema`, `cartItemSchema`) → inside their respective module's `types.ts` or a `schemas.ts` next to it |
+| `utils.ts`       | Classic junk-drawer — usually 5+ unrelated functions with no shared theme | Split by category into `lib/format/`, `lib/string/`, `lib/array/`, `lib/number/` as shown above                                                                      |
 
-**Why this split matters at scale:** when `lib/` only contains pure functions, it can be unit-tested trivially (no mocks needed), safely imported from *anywhere* including Server Components, Client Components, and even a future React Native app — without ever risking a circular import back into `modules/`. The moment a single `await` or `db.query` slips into `lib/`, that guarantee breaks silently.
+**Why this split matters at scale:** when `lib/` only contains pure functions, it can be unit-tested trivially (no mocks needed), safely imported from _anywhere_ including Server Components, Client Components, and even a future React Native app — without ever risking a circular import back into `modules/`. The moment a single `await` or `db.query` slips into `lib/`, that guarantee breaks silently.
 
 ---
 
@@ -453,7 +456,7 @@ Rules without tooling are suggestions. This project enforces the dependency flow
 
 ```js
 // eslint.config.js
-import boundaries from 'eslint-plugin-boundaries';
+import boundaries from 'eslint-plugin-boundaries'
 
 export default [
   {
@@ -469,30 +472,37 @@ export default [
       ],
     },
     rules: {
-      'boundaries/element-types': ['error', {
-        default: 'disallow',
-        rules: [
-          { from: 'app', allow: ['modules', 'components', 'libs', 'config'] },
-          { from: 'modules', allow: ['components', 'services', 'infrastructure', 'libs', 'config'] },
-          { from: 'components', allow: ['components', 'libs'] },        // never 'modules'
-          { from: 'services', allow: ['infrastructure', 'libs'] },      // never 'modules'
-          { from: 'infrastructure', allow: ['infrastructure', 'libs'] }, // never 'app'
-          { from: 'libs', allow: ['libs'] },                            // never 'modules' — enforces purity
-        ],
-      }],
+      'boundaries/element-types': [
+        'error',
+        {
+          default: 'disallow',
+          rules: [
+            { from: 'app', allow: ['modules', 'components', 'libs', 'config'] },
+            {
+              from: 'modules',
+              allow: ['components', 'services', 'infrastructure', 'libs', 'config'],
+            },
+            { from: 'components', allow: ['components', 'libs'] }, // never 'modules'
+            { from: 'services', allow: ['infrastructure', 'libs'] }, // never 'modules'
+            { from: 'infrastructure', allow: ['infrastructure', 'libs'] }, // never 'app'
+            { from: 'libs', allow: ['libs'] }, // never 'modules' — enforces purity
+          ],
+        },
+      ],
       // Forces cross-module imports through index.ts only — blocks deep imports
       // e.g. disallows reaching into `modules/checkout/services/payment.ts` from outside the module
-      'boundaries/entry-point': ['error', {
-        default: 'disallow',
-        rules: [
-          { target: 'modules', allow: 'index.ts' },
-        ],
-      }],
+      'boundaries/entry-point': [
+        'error',
+        {
+          default: 'disallow',
+          rules: [{ target: 'modules', allow: 'index.ts' }],
+        },
+      ],
       // Optional but recommended: block imports of fetch/db clients inside src/lib/**
       // via eslint-plugin-import's no-restricted-imports, scoped to lib/ only.
     },
   },
-];
+]
 ```
 
 Runs in pre-commit (Husky) and CI. A PR that violates the dependency flow, reaches past a module's `index.ts`, or puts a side-effecting function into `lib/` fails before merge — not after a refactor six months later finds it.

@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { X, User, Search, Globe } from 'lucide-react'
 import { clsx } from 'clsx'
-import { NAVIGATION_ITEMS } from '@/constants/navigation'
-import { authClient } from '@/lib/auth-client'
+import { NAVIGATION_ITEMS } from '@/config/navigation'
+import { authClient } from '@/infrastructure/auth/auth-client'
 
 interface MobileMenuProps {
   isOpen: boolean

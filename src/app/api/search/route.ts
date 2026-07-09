@@ -1,6 +1,6 @@
 // app/api/search/route.ts
-import { getAllProducts } from '@/lib/products'
-import { searchProducts, normalizeQuery } from '@/lib/search'
+import { getAllProducts } from '@/modules/fragrance'
+import { searchProducts, normalizeQuery } from '@/services/search'
 import { SearchQuerySchema } from '@/lib/validation'
 import type { SearchResponse } from '@/lib/validation'
 

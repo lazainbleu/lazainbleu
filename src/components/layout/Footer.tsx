@@ -15,6 +15,8 @@ import { clsx } from 'clsx'
    CONSTANTS (CLEAN + ORGANIZED)
    ============================ */
 
+const CURRENT_YEAR = new Date().getFullYear()
+
 const FOOTER_LINKS = [
   {
     title: 'Collections',
@@ -58,17 +60,17 @@ const SOCIAL_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#0A192F]/5 bg-[var(--lb-white)] pb-10 pt-20">
+    <footer className="border-t border-[#0A192F]/5 bg-[var(--lb-white)] pt-20 pb-10">
       <div className="mx-auto max-w-[1440px] px-6 md:px-12">
         {/* Upper Footer */}
         <div className="mb-20 grid grid-cols-1 gap-16 lg:grid-cols-12">
           {/* Newsletter */}
           <div className="space-y-8 lg:col-span-4">
             <div className="space-y-4">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-[#0A192F]">
+              <h3 className="text-xs font-semibold tracking-[0.3em] text-[#0A192F] uppercase">
                 Newsletter
               </h3>
-              <p className="max-w-sm text-sm font-light leading-relaxed text-[#0A192F]/80">
+              <p className="max-w-sm text-sm leading-relaxed font-light text-[#0A192F]/80">
                 Subscribe to receive updates on new launches and invitations to private
                 events.
               </p>
@@ -86,7 +88,7 @@ export default function Footer() {
                   'font-light transition-all duration-500 placeholder:text-neutral-400 focus:border-[#0A192F]'
                 )}
               />
-              <button className="absolute right-0 top-1/2 -translate-y-1/2 p-2 transition-transform duration-300 hover:translate-x-1">
+              <button className="absolute top-1/2 right-0 -translate-y-1/2 p-2 transition-transform duration-300 hover:translate-x-1">
                 <ArrowRight className="h-4 w-4 stroke-[1px] text-[#0A192F]" />
               </button>
             </form>
@@ -96,7 +98,7 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-12 md:grid-cols-3 lg:col-span-8">
             {FOOTER_LINKS.map((section) => (
               <div key={section.title} className="space-y-6">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-[#0A192F]">
+                <h3 className="text-xs font-semibold tracking-[0.3em] text-[#0A192F] uppercase">
                   {section.title}
                 </h3>
                 <ul className="space-y-4">
@@ -124,10 +126,10 @@ export default function Footer() {
         <div className="flex flex-col items-center justify-between gap-8 border-y border-[#0A192F]/5 py-12 md:flex-row">
           {/* Logo */}
           <div className="flex flex-col items-center space-y-2 md:items-start">
-            <h2 className="text-xl font-light uppercase tracking-[0.4em] text-[#0A192F]">
+            <h2 className="text-xl font-light tracking-[0.4em] text-[#0A192F] uppercase">
               LAZAIN<span className="font-semibold">BLEU</span>
             </h2>
-            <span className="block text-center text-[clamp(10px,2vw,12px)] uppercase tracking-[0.4em] text-[var(--lb-bleu)]">
+            <span className="block text-center text-[clamp(10px,2vw,12px)] tracking-[0.4em] text-[var(--lb-bleu)] uppercase">
               Luxury, Inspired by Faith and Heritage
             </span>
           </div>
@@ -142,7 +144,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="group relative text-[#0A192F] transition-colors duration-500 hover:text-[#08172B]"
               >
-                <span className="duration-600 absolute inset-0 scale-0 rounded-full bg-[#08172B] opacity-0 transition-all group-hover:scale-125 group-hover:opacity-10"></span>
+                <span className="absolute inset-0 scale-0 rounded-full bg-[#08172B] opacity-0 transition-all duration-600 group-hover:scale-125 group-hover:opacity-10"></span>
                 <Icon size={22} weight="light" className="relative" />
               </Link>
             ))}
@@ -154,19 +156,19 @@ export default function Footer() {
           <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
             {/* Legal */}
             <div className="flex flex-col items-center gap-4 md:flex-row md:gap-8">
-              <p className="text-[10px] font-light uppercase tracking-widest text-[#0A192F]/70">
-                © 2025 Lazain Bleu.
+              <p className="text-[10px] font-light tracking-widest text-[#0A192F]/70 uppercase">
+                © {CURRENT_YEAR} Lazain Bleu
               </p>
               <div className="flex gap-6">
                 <Link
                   href="/privacy"
-                  className="text-[10px] font-light uppercase tracking-widest text-[#0A192F]/70 hover:text-[#0A192F]"
+                  className="text-[10px] font-light tracking-widest text-[#0A192F]/70 uppercase hover:text-[#0A192F]"
                 >
                   Privacy
                 </Link>
                 <Link
                   href="/terms"
-                  className="text-[10px] font-light uppercase tracking-widest text-[#0A192F]/70 hover:text-[#0A192F]"
+                  className="text-[10px] font-light tracking-widest text-[#0A192F]/70 uppercase hover:text-[#0A192F]"
                 >
                   Terms
                 </Link>
@@ -175,7 +177,7 @@ export default function Footer() {
 
             {/* Payment Icons */}
             <div className="flex flex-wrap items-center justify-center gap-5">
-              <span className="mr-2 text-[9px] uppercase tracking-[0.2em] text-[#0A192F]">
+              <span className="mr-2 text-[9px] tracking-[0.2em] text-[#0A192F] uppercase">
                 Secure Payment:
               </span>
 
