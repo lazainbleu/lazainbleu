@@ -1,21 +1,9 @@
 'use client'
 
-import dynamic from 'next/dynamic'
+import { useLayoutEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Footer from './Footer'
-
-const Header = dynamic(() => import('./Header'), {
-  ssr: false,
-  loading: () => <HeaderPlaceholder />,
-})
-
-function HeaderPlaceholder() {
-  return (
-    <header
-      className="fixed top-0 right-0 left-0 z-50 h-[72px] bg-(--lb-white) md:h-[88px]"
-      aria-hidden
-    />
-  )
-}
+import Header from './Header'
 
 interface RootLayoutClientProps {
   children: React.ReactNode
@@ -33,6 +21,22 @@ interface RootLayoutClientProps {
  * dan memudahkan maintenance jangka panjang
  */
 export function RootLayoutClient({ children }: RootLayoutClientProps) {
+  const pathname = usePathname()
+
+  useLayoutEffect(() => {
+    if (typeof window === 'undefined') return
+
+    try {
+      window.history.scrollRestoration = 'manual'
+    } catch {
+      // Ignore unsupported browsers
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [pathname])
+
   return (
     <>
       <Header />

@@ -2,13 +2,7 @@
 
 import Link from 'next/link'
 import { ArrowRight, CreditCard } from 'lucide-react'
-import {
-  InstagramLogo,
-  TiktokLogo,
-  PinterestLogo,
-  YoutubeLogo,
-  LinkedinLogo,
-} from 'phosphor-react'
+import { InstagramLogo, PinterestLogo, YoutubeLogo, LinkedinLogo } from 'phosphor-react'
 import { clsx } from 'clsx'
 
 /* ============================
@@ -48,7 +42,6 @@ const FOOTER_LINKS = [
 
 const SOCIAL_LINKS = [
   { Icon: InstagramLogo, href: 'https://www.instagram.com/lazainbleu' },
-  { Icon: TiktokLogo, href: 'https://www.tiktok.com/@lazainbleu' },
   { Icon: PinterestLogo, href: 'https://www.pinterest.com/lazainbleu' },
   { Icon: YoutubeLogo, href: 'https://www.youtube.com/@LazainBleu' },
   { Icon: LinkedinLogo, href: 'https://www.linkedin.com/company/lazainbleu/' },

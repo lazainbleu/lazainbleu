@@ -11,7 +11,10 @@
   --lb-border: rgba(15, 23, 42, 0.08);
 }
 
-html,
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -19,7 +22,7 @@ body {
   color: var(--lb-bleu);
   font-family: var(--font-inter, sans-serif);
   -webkit-font-smoothing: antialiased;
-  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 /* Luxury Container */

@@ -14,36 +14,58 @@ import SearchModal from '@/modules/fragrance/components/SearchModal'
 
 export default function Header() {
   const isScrolled = useScroll(10)
-  const { data: session, isPending } = authClient.useSession()
-  const [hasMounted, setHasMounted] = useState(false)
+  const [user, setUser] = useState<{ id: string } | null>(null)
+  const [isSessionLoading, setIsSessionLoading] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   useEffect(() => {
-    setHasMounted(true)
+    let active = true
+
+    const loadSession = async () => {
+      try {
+        const response = await authClient.getSession()
+
+        if (!active) return
+
+        setUser((response?.data?.user ?? null) as { id: string } | null)
+      } catch {
+        if (active) {
+          setUser(null)
+        }
+      } finally {
+        if (active) {
+          setIsSessionLoading(false)
+        }
+      }
+    }
+
+    loadSession()
+
+    return () => {
+      active = false
+    }
   }, [])
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'unset'
   }, [isMobileMenuOpen])
 
-  const user = hasMounted ? (session?.user ?? null) : null
-  const isSessionLoading = !hasMounted || isPending
-
-  const transitionClass = 'transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]'
+  const transitionClass =
+    'transition-[background-color,border-color,box-shadow,padding] duration-200 ease-out'
 
   return (
     <header
       className={clsx(
-        'fixed top-0 right-0 left-0 z-50 bg-(--lb-white)',
+        'fixed top-0 right-0 left-0 z-50 bg-(--lb-white) will-change-[background-color,box-shadow,padding]',
         transitionClass,
         isScrolled ? 'shadow-sm' : 'pt-2 md:pt-4'
       )}
     >
       <div
         className={clsx(
-          'w-full border-b',
+          'w-full border-b will-change-[background-color,box-shadow,padding]',
           transitionClass,
           isScrolled
             ? 'border-neutral-100 bg-(--lb-white) py-2 backdrop-blur-md'
@@ -90,7 +112,13 @@ export default function Header() {
   )
 }
 
-function Logo({ isScrolled, transitionClass }: any) {
+function Logo({
+  isScrolled,
+  transitionClass,
+}: {
+  isScrolled: boolean
+  transitionClass: string
+}) {
   return (
     <div className="flex flex-col items-center justify-center text-center">
       <Link href="/" className="group block">
@@ -120,7 +148,15 @@ function Logo({ isScrolled, transitionClass }: any) {
   )
 }
 
-function DesktopNav({ items, showGlobe, className }: any) {
+function DesktopNav({
+  items,
+  showGlobe,
+  className,
+}: {
+  items: Array<{ href: string; label: string }>
+  showGlobe?: boolean
+  className?: string
+}) {
   return (
     <nav
       className={clsx(
@@ -138,7 +174,7 @@ function DesktopNav({ items, showGlobe, className }: any) {
         </button>
       )}
 
-      {items.map((item: any) => (
+      {items.map((item) => (
         <Link
           key={item.href}
           href={item.href}

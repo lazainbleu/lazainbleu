@@ -1,6 +1,5 @@
 import '@/styles/globals.css'
 import { Inter } from 'next/font/google'
-import { ThemeProvider } from 'next-themes'
 import type { Metadata, Viewport } from 'next'
 import { RootLayoutClient } from '@/components/layout/RootLayoutClient'
 // import Splash from '@/components/ui/splash'
@@ -89,7 +88,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     url: 'https://lazainbleu.com',
     sameAs: [
       'https://www.instagram.com/lazainbleu',
-      'https://www.tiktok.com/@lazainbleu',
       'https://www.pinterest.com/lazainbleu',
     ],
     description:
@@ -114,10 +112,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${inter.variable} bg-[var(--lb-white)] text-[var(--lb-bleu)] antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-          {/* <Splash /> */}
-          <RootLayoutClient>{children}</RootLayoutClient>
-        </ThemeProvider>
+        {/* <Splash /> */}
+        <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
   )

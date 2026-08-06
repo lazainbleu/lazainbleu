@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { X, User, Search, Globe } from 'lucide-react'
 import { clsx } from 'clsx'
 import { NAVIGATION_ITEMS } from '@/config/navigation'
@@ -14,8 +15,32 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const router = useRouter()
-  const { data: session } = authClient.useSession()
-  const user = session?.user ?? null
+  const [user, setUser] = useState<{ id: string } | null>(null)
+
+  useEffect(() => {
+    let active = true
+
+    const loadSession = async () => {
+      try {
+        const response = await authClient.getSession()
+
+        if (!active) return
+
+        setUser((response?.data?.user ?? null) as { id: string } | null)
+      } catch {
+        if (active) {
+          setUser(null)
+        }
+      }
+    }
+
+    loadSession()
+
+    return () => {
+      active = false
+    }
+  }, [])
+
   const accountHref = user ? '/profile' : '/login'
   const accountLabel = user ? 'Profile' : 'Login'
 
@@ -95,7 +120,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
             <button
               className="-m-3 p-3 transition-all hover:opacity-50 active:scale-90"
-              onClick={() => console.log('Search clicked')}
+              onClick={onClose}
             >
               <Search
                 className="h-5 w-5 stroke-[1.1px]"
@@ -105,7 +130,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
             <button
               className="-m-3 p-3 transition-all hover:opacity-50 active:scale-90"
-              onClick={() => console.log('Globe clicked')}
+              onClick={onClose}
             >
               <Globe
                 className="h-5 w-5 stroke-[1.1px]"

@@ -2,20 +2,33 @@
 import { useEffect, useState } from 'react'
 
 export function useScroll(offset = 10) {
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.scrollY > offset
+  })
 
   useEffect(() => {
-    let lastY = 0
+    let frame = 0
+
     const handle = () => {
-      const y = window.scrollY
-      if (Math.abs(y - lastY) > 2) {
-        setScrolled(y > offset)
-        lastY = y
-      }
+      if (frame) return
+
+      frame = window.requestAnimationFrame(() => {
+        const next = window.scrollY > offset
+        setScrolled((prev) => (prev === next ? prev : next))
+        frame = 0
+      })
     }
 
+    handle()
     window.addEventListener('scroll', handle, { passive: true })
-    return () => window.removeEventListener('scroll', handle)
+
+    return () => {
+      if (frame) {
+        window.cancelAnimationFrame(frame)
+      }
+      window.removeEventListener('scroll', handle)
+    }
   }, [offset])
 
   return scrolled
